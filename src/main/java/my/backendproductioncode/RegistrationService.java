@@ -9,7 +9,6 @@ public class RegistrationService {
     private final Map<String, User> registeredUsers = new HashMap<>();
     private static final Logger logger = Logger.getLogger(RegistrationService.class.getName());
 
-
     public RegistrationService() {
         // Add initial users to the map
         registeredUsers.put("User1", new User("User1","user1@example.com", "password1", "password1"));
@@ -37,17 +36,14 @@ public class RegistrationService {
     private boolean isValidEmail(String email) {
         return email.contains("@");
     }
-    public boolean validateUserSignIn(String username, String password) {
-        User user = registeredUsers.get(username);
-        return user != null && user.password().equals(password);
-    }
+
     public void printRegisteredUsers() {
         for (Map.Entry<String, User> entry : registeredUsers.entrySet()) {
             String username = entry.getKey();
             User user = entry.getValue();
-            System.out.println("Username: " + username);
-            System.out.println("Email: " + user.email());
-            System.out.println("Password: " + user.password());
+            logger.info("Username: " + username);
+            logger.info("Email: " + user.email());
+            logger.info("Password: " + user.password());
         }
     }
     public boolean printRegisteredUser(String targetUsername) {
@@ -55,10 +51,9 @@ public class RegistrationService {
             String username = entry.getKey();
             User user = entry.getValue();
             if (username.equals(targetUsername)) {
-                System.out.println("Username: " + username);
-                System.out.println("Email: " + user.email());
-                System.out.println("Password: " + user.password());
-                System.out.println(); // Add an empty line to separate users
+                logger.info("Username: " + username);
+                logger.info("Email: " + user.email());
+                logger.info("Password: " + user.password());
                 return true;
             }
         }
@@ -69,30 +64,30 @@ public class RegistrationService {
     public Map<String, User> getRegisteredUsers() {
     return registeredUsers;
     }
+
     public boolean isViewAccountsCommand(String command) {
         return "view_accounts".equalsIgnoreCase(command);
     }
 
+
     public boolean updateUser(String username, String newEmail, String newPassword) {
-        if (registeredUsers.containsKey(username)) {
-            User oldUser = registeredUsers.get(username);
+        registeredUsers.computeIfPresent(username, (key, oldUser) -> {
             User newUser = new User(username, newEmail, newPassword, oldUser.confirmPassword()); // Create a new User with updated data
-            registeredUsers.put(username, newUser); // Replace the old User with the updated User
             logger.info("User Updated Successfully");
-            return true; // User updated successfully
-        }
-        return false; // User not found
+            return newUser; // Replace the old User with the updated User
+        });
+        return registeredUsers.containsKey(username);
     }
     public boolean deleteUser(String username) {
         if (registeredUsers.containsKey(username)) {
-            User user = registeredUsers.get(username);
-                registeredUsers.remove(username);
-                logger.info("User Deleted Successfully");
-                return true; // User deleted successfully
+            registeredUsers.remove(username);
+            logger.info("User Deleted Successfully");
+            return true; // User deleted successfully
         }
         logger.info("User not found for deletion");
         return false; // User not found
     }
+
 
 }
 

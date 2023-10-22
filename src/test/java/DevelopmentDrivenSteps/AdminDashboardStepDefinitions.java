@@ -1,9 +1,11 @@
 package DevelopmentDrivenSteps;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import my.backendproductioncode.AdminDashboard;
+import my.backendproductioncode.Appointment;
 import my.backendproductioncode.RegistrationService;
 import org.junit.Assert;
 
@@ -22,7 +24,7 @@ public class AdminDashboardStepDefinitions {
 
     private String oldCategoryName;
     private String newCategoryName;
-    boolean onDashboard   =false;
+    boolean flag =false;
     private static int currentProductId=10;
     private String name;
     private String description;
@@ -31,9 +33,10 @@ public class AdminDashboardStepDefinitions {
     private String availability;
 
     private String registrationResult;
+    public String appointment;
     @Given("the admin is on the dashboard")
     public void theAdminIsOnTheDashboard() {
-        onDashboard   =true;
+        flag =true;
     }
 
     @When("the admin adds a new product category with name {string}")
@@ -118,7 +121,7 @@ public class AdminDashboardStepDefinitions {
          price = Double.parseDouble(details.get("Price"));
          category = details.get("Category");
          availability = details.get("Availability");
-        boolean updated = adminDashboard.updateProduct(productId,name,description, price, category, availability);
+         adminDashboard.updateProduct(productId,name,description, price, category, availability);
     }
 
 
@@ -128,11 +131,9 @@ public class AdminDashboardStepDefinitions {
     }
 
 
-
-
     @Given("the application is running")
     public void the_application_is_running() {
-        boolean isRunning = true;
+        flag = true;
     }
 
     @When("I enter the command {string}")
@@ -204,6 +205,65 @@ public class AdminDashboardStepDefinitions {
     public void the_user_should_see_a_success_message() {
         Assert.assertEquals("Registration successful", registrationResult);
     }
+
+
+
+    @Given("I am logged in as an admin")
+    public void i_am_logged_in_as_an_admin() {
+        flag=true;
+    }
+
+    @When("I provide the appointment details as follows:")
+    public void i_provide_the_appointment_details_as_follows(DataTable dataTable) {
+        List<List<String>> appointmentData = dataTable.asLists(String.class);
+        int appointmentId = Integer.parseInt(appointmentData.get(1).get(0));
+        String customerName = appointmentData.get(1).get(1);
+        String product = appointmentData.get(1).get(2);
+        String scheduledDate = appointmentData.get(1).get(3);
+        String scheduledTime = appointmentData.get(1).get(4);
+        String status = appointmentData.get(1).get(5);
+
+        Appointment appointment = new Appointment(appointmentId, customerName, product, scheduledDate, scheduledTime, status);
+        this.appointment =adminDashboard.addAppointment(appointment);
+    }
+    @Then("I should see the new appointment in the list of installation appointments")
+    public void i_should_see_the_new_appointment_in_the_list_of_installation_appointments() {
+        Assert.assertEquals("Added successfully", appointment);
+    }
+
+
+    @When("I provide the updated appointment details as follows:")
+    public void i_provide_the_updated_appointment_details_as_follows(DataTable dataTable) {
+        List<List<String>> appointmentData = dataTable.asLists(String.class);
+        int appointmentId = Integer.parseInt(appointmentData.get(1).get(0));
+        String customerName = appointmentData.get(1).get(1);
+        String product = appointmentData.get(1).get(2);
+        String scheduledDate = appointmentData.get(1).get(3);
+        String scheduledTime = appointmentData.get(1).get(4);
+        String status = appointmentData.get(1).get(5);
+
+        Appointment updatedAppointment = new Appointment(appointmentId, customerName, product, scheduledDate, scheduledTime, status);
+        appointment=adminDashboard.updateAppointment(appointmentId, updatedAppointment);
+    }
+
+    @Then("I should see the updated appointment details in the list of installation appointments")
+    public void i_should_see_the_updated_appointment_details_in_the_list_of_installation_appointments() {
+        Assert.assertEquals("Updated successfully", appointment);
+    }
+
+    @When("I enter a {string} followed by the appointment ID in the console")
+    public void i_enter_a_followed_by_the_appointment_id_in_the_console(String command) {
+        int appointmentId = Integer.parseInt(command);
+        appointment=adminDashboard.deleteAppointment(appointmentId);
+    }
+
+    @Then("The appointment should be removed from the list of installation appointments")
+    public void the_appointment_should_be_removed_from_the_list_of_installation_appointments() {
+        Assert.assertEquals("Deleted successfully", appointment);
+    }
+
+
+
 }
 
 
