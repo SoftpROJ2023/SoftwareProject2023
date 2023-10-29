@@ -9,7 +9,8 @@ public class AdminDashboard {
     private final ArrayList<String> productCategories = new ArrayList<>(Arrays.asList("Electronics", "External"));
     private final Map<Integer, Product> productMap = new HashMap<>();
     {
-        productMap.put(1, new Product(1, "AA", "Product 1", 10.0, "ele", "true"));
+        productMap.put(1, new Product(1, "AA", "Product 1", 10.0, "ele", "In Stock"));
+        productMap.put(2, new Product(2, "BB", "Product 2", 15.0, "clothing", "Out of Stock"));
     }
     private final List<Appointment> appointments;
     private static final String SCHEDULED = "Scheduled";
@@ -52,6 +53,9 @@ public class AdminDashboard {
     }
 
 
+    public Map<Integer, Product> getProductMap() {
+        return productMap;
+    }
     public void addProduct(int productId, String name,String description, double price, String category, String availability) {
         Product product = new Product(productId,name,description, price, category, availability);
         productMap.put(productId, product);
