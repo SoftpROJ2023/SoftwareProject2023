@@ -40,3 +40,7 @@ g
 7src/main/java/my/backendproductioncode/Appointment.java,a\c\acb1c4adc47c32cf27cde3b539ce456b023a33a5
 L
 cases/productCatalog.feature,e\5\e57b6f1756bdd2efed425a9d10b27c11581d39bf
+j
+:src/main/java/my/backendproductioncode/ProductCatalog.java,5\c\5c70571cd2cdcc72f3f13ff25e82625b884bb658
+m
+=src/test/java/DevelopmentDrivenSteps/ProductCatalogSteps.java,8\8\88627f974b53b83c70ddbefc140db444c72b9819

@@ -20,7 +20,7 @@ public class RegistrationService {
                 if (isValidEmail(email)) {
                     User newUser = new User(username,email, password, confirmPassword);
                     registeredUsers.put(username, newUser);
-                    printRegisteredUsers();
+                    //put logger.info
                     return "Registration successful";
                 } else {
                     return "Invalid email address";
