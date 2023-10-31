@@ -16,8 +16,6 @@ c
 .src/main/java/frontendproductioncode/Main.java,c\a\ca403ab148b529d700c4093c64a55646295b8d5a
 j
 :src/main/java/my/backendproductioncode/AdminDashboard.java,4\0\40aee0f6c87de6cd29af84794e1431fbd1c1f494
-k
-;src/main/java/frontendproductioncode/FrontendComponent.java,f\3\f34c688b1fa01b8bb5528ffb0e7cf921717f4a74
 M
 cases/AdmainDashboard.feature,8\e\8e3294f87a66caf6f47e1c1abfb320a670da6598
 w
@@ -44,3 +42,5 @@ j
 :src/main/java/my/backendproductioncode/ProductCatalog.java,5\c\5c70571cd2cdcc72f3f13ff25e82625b884bb658
 m
 =src/test/java/DevelopmentDrivenSteps/ProductCatalogSteps.java,8\8\88627f974b53b83c70ddbefc140db444c72b9819
+l
+<src/main/java/frontendproductioncode/FrontendComponents.java,b\7\b7776fdeb5054c13f69ad8c05fa83b202ad689bb
