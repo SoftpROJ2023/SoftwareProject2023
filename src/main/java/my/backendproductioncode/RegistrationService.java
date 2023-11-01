@@ -10,7 +10,7 @@ public class RegistrationService {
     private static final Logger logger = Logger.getLogger(RegistrationService.class.getName());
 
     public RegistrationService() {
-        registeredUsers.put("User1", new User("User1","user1@example.com", "password1", "password1"));
+        registeredUsers.put("Admin", new User("Admin","admin@example.com", "admin", "admin"));
         registeredUsers.put("User2", new User("User2","user2@example.com", "password2", "password2"));
     }
 

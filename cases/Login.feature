@@ -4,7 +4,7 @@ Feature: Sign-In Functionality
     Given the user is on the sign-in page
     When the user provides the following details for sign-in:
       | username | password |
-      | User1    | password1   |
+      | Admin    | admin    |
     Then the user should be successfully signed in
 
   Scenario: User enters an invalid username and password

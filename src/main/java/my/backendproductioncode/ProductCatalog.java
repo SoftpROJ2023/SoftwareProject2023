@@ -8,17 +8,22 @@ import java.util.logging.Logger;
 public class ProductCatalog {
     public static final Logger logger = Logger.getLogger(ProductCatalog.class.getName());
 
-    AdminDashboard adminDashboard = new AdminDashboard();
-    List<String> categories = adminDashboard.getProductCategories();
-    Map<Integer, Product> products = adminDashboard.getProductMap();
-
+    AdminDashboard adminDashboard;
+    List<String> categories;
+    Map<Integer, Product> products;
+    public ProductCatalog(){
+    }
+    public ProductCatalog(AdminDashboard admin){
+            this.adminDashboard=admin;
+            categories = adminDashboard.getProductCategories();
+            products = adminDashboard.getProductMap();
+    }
     public boolean printProductCategories() {
         for (String category : categories) {
             logger.info(category);
         }
         return true;
     }
-
     public boolean getProductsRelatedToSpecificCategory(String categoryName) {
         String desiredCategory = categoryName;
         boolean foundProducts = false; // Initialize a flag

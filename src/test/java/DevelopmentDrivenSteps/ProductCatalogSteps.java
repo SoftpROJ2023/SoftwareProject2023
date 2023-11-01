@@ -3,11 +3,13 @@ package DevelopmentDrivenSteps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import my.backendproductioncode.AdminDashboard;
 import my.backendproductioncode.ProductCatalog;
 import org.junit.Assert;
 
 public class ProductCatalogSteps {
-    ProductCatalog productCatalog=new ProductCatalog();
+    AdminDashboard admin=new AdminDashboard();
+    ProductCatalog productCatalog=new ProductCatalog(admin);
     boolean userInPage=false;
     boolean dataIsPrinted=false;
     boolean productIsListed=false;

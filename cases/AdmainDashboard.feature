@@ -40,21 +40,21 @@ Feature: Admin Dashboard - Manage Product Categories
 
   Scenario: Search for a Specific Customer Account
     Given the application is running
-    When I enter the username "User1"
+    When I enter the username "Admin"
     Then I should see the details of the customer's account
 
   Scenario: Edit a Customer Account
     Given the application is running
     When the user provides the following details for editing:
       | username | email             | password   |
-      | User1    | user1@example.com | password11 |
+      | Admin    | admin@example.com | password11 |
     Then the user should see an account update success message
 
   Scenario: Delete a Customer Account
     Given the application is running
     When the user provides the following details for deletion:
       | username |  |
-      | User1    |  |
+      | Admin    |  |
     Then the user should see an account deletion success message
 
 

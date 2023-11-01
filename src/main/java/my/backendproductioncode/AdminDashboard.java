@@ -40,7 +40,11 @@ public class AdminDashboard {
             productCategories.set(index, newCategory);
         }
     }
-
+    public void printProductCategories() {
+        for (String category : productCategories) {
+            logger.info(category);
+        }
+    }
     public void deleteProductCategory(String categoryName) {
         if (productCategories.contains(categoryName)) {
             productCategories.remove(categoryName);
