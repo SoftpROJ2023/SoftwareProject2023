@@ -11,7 +11,9 @@ public class RegistrationService {
 
     public RegistrationService() {
         registeredUsers.put("Admin", new User("Admin","admin@example.com", "admin", "admin"));
+        registeredUsers.put("User1", new User("User1","user1@example.com", "password1", "password1"));
         registeredUsers.put("User2", new User("User2","user2@example.com", "password2", "password2"));
+
     }
 
     public String registerUser(String username, String email, String password, String confirmPassword) {

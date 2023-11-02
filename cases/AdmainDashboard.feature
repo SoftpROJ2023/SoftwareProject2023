@@ -2,20 +2,20 @@ Feature: Admin Dashboard - Manage Product Categories
 
   Scenario: Add a new product category
     Given the admin is on the dashboard
-    When the admin adds a new product category with name "External"
-    Then the product category "External" should be listed on the dashboard
+    When the admin adds a new product category with name "exterior"
+    Then the product category "exterior" should be listed on the dashboard
 
   Scenario: Edit an existing product category
     Given the admin is on the dashboard
-    And there is an existing product category with name "Electronics"
-    When the admin edits the product category with name "Electronics" to "Gadgets"
-    Then the product category "Gadgets" should be edited on the dashboard
+    And there is an existing product category with name "electronics"
+    When the admin edits the product category with name "electronics" to "exterior"
+    Then the product category "electronics" should be edited on the dashboard
 
   Scenario: Delete an existing product category
     Given the admin is on the dashboard
-    And there is an existing product category with name "Electronics"
-    When the admin deletes the product category with name "Electronics"
-    Then the product category "Electronics" should not be listed on the dashboard
+    And there is an existing product category with name "electronics"
+    When the admin deletes the product category with name "electronics"
+    Then the product category "electronics" should not be listed on the dashboard
 
 
   Scenario: Add a product listing
@@ -28,8 +28,8 @@ Feature: Admin Dashboard - Manage Product Categories
   Scenario: Update a product listing
     Given the admin is on the dashboard
     When they update the product with the ID 1 with the following details:
-      |Name| Description  | Price | Category    | Availability |
-      |AAA| Updated Prod | 15.0  | Home Decor | Out of Stock |
+      | Name       | Description      | Price | Category | Availability |
+      | Car Alarms | It is Car Alarms | 10.0  | interior | Out of Stock |
     Then the product with the ID 1 should be updated on the dashboard
 
 

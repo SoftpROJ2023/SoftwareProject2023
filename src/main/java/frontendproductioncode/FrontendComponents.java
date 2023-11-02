@@ -11,6 +11,12 @@ import java.util.logging.Logger;
 
 public class FrontendComponents {
     private static final Logger logger = Logger.getLogger(FrontendComponents.class.getName());
+    private static int id;
+    private static String name;
+    private static String description;
+    private static int price;
+    private static String category;
+    private static String availability;
     RegistrationService registrationService;
     SignInServices signInService;
     AdminDashboard admin;
@@ -152,25 +158,12 @@ public class FrontendComponents {
                     break;
                 case "6":
                     logger.log(Level.INFO, "You chose to Add a product listing");
-                    displayEnterYourValue();
-                    int id=scanner.nextInt();
-                    String name=scanner.nextLine();
-                    int price=scanner.nextInt();
-                    String desc=scanner.nextLine();
-                    String cat=scanner.nextLine();
-                    String ava=scanner.nextLine();
-                    admin.addProduct(id,name,desc,price,cat,ava);
+                    readInputFromUser();
+                    admin.addProduct(id, name, description, price, category, availability);
                     break;
                 case "7":
                     logger.log(Level.INFO, "You chose to Update a product listing");
-                     displayEnterYourValue();
-                     id=scanner.nextInt();
-                     name=scanner.nextLine();
-                     price=scanner.nextInt();
-                     desc=scanner.nextLine();
-                     cat=scanner.nextLine();
-                     ava=scanner.nextLine();
-                    admin.updateProduct(id,name,desc,price,cat,ava);
+
                     break;
                 case "8":
                     logger.log(Level.INFO, "You chose to View customer accounts");
@@ -236,15 +229,15 @@ public class FrontendComponents {
     }
     public void displayAdminDashboard(){
         logger.log(Level.INFO, "Welcome to Admin dashboard");
-        logger.log(Level.INFO, "1. See all Categories  2. Add a new catalog");
+        logger.log(Level.INFO, "1. See all Categories  2. Add a new catalog 3. Edit an existing product category");
         logger.log(Level.INFO, "");
-        logger.log(Level.INFO, "3. Edit an existing product category 4. Delete an existing product category 5. Add a product listing ");
+        logger.log(Level.INFO, "4. Delete an existing product category 5.See all product listing 6. Add a product listing ");
         logger.log(Level.INFO, "");
-        logger.log(Level.INFO, "6. Update a product listing 7. View customer accounts 8. Search for a specific customer account");
+        logger.log(Level.INFO, "7. Update a product listing 8. View customer accounts 9. Search for a specific customer account");
         logger.log(Level.INFO, "");
-        logger.log(Level.INFO, "9. Delete a customer account 10. Add a new customer account 11. Schedule a new installation appointment");
+        logger.log(Level.INFO, "10. Delete a customer account 11. Add a new customer account 12. Schedule a new installation appointment");
         logger.log(Level.INFO, "");
-        logger.log(Level.INFO, "12. Update an existing installation appointment 13. Cancel an existing installation appointment");
+        logger.log(Level.INFO, "13. Update an existing installation appointment 14. Cancel an existing installation appointment");
         logger.log(Level.INFO, "");
         logger.log(Level.INFO, "0. Exit");
 
@@ -286,6 +279,29 @@ public class FrontendComponents {
         logger.info("Password: ");
         String password = scanner.nextLine();
         signInService.signInUser(registrationService,username,password);
+    }
+    public static void readInputFromUser() {
+        Scanner scanner = new Scanner(System.in);
+
+        logger.info("Enter an ID (integer): ");
+        id = scanner.nextInt();
+
+        logger.info("Enter a Name (string): ");
+        scanner.nextLine(); // Consume the newline character
+        name = scanner.nextLine();
+
+        logger.info("Enter a Description (string): ");
+        description = scanner.nextLine();
+
+        logger.info("Enter a Price (Integer): ");
+        price = scanner.nextInt();
+
+        logger.info("Enter a Category (string): ");
+        scanner.nextLine(); // Consume the newline character
+        category = scanner.nextLine();
+
+        logger.info("Enter Availability (String): ");
+        availability = scanner.nextLine();
     }
 
     public static void exit() {

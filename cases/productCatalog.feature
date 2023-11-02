@@ -7,7 +7,7 @@ Feature: Product Catalog
 
  Scenario: Browse Products within a Category
   Given the user is on the Product Catalog page
-  When they click on the "ele" category
+  When they click on the "exterior" category
   Then they should see a list of products related to electronics
 
  Scenario: View Product Details
@@ -17,7 +17,7 @@ Feature: Product Catalog
 
  Scenario: Search for a Product
   Given the user is on the Product Catalog page
-  When they enter "AA" into the search bar
+  When they enter "Car Audio System" into the search bar
   Then they should see a list of products related to product
 
  Scenario: Filter Products by Availability
