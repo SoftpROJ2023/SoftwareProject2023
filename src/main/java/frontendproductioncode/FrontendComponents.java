@@ -20,6 +20,7 @@ public class FrontendComponents {
     boolean adminFlag = false;
     boolean userFlag = false;
     boolean isInUserDashboard=false;
+    String message="Please Enter Your Choice:";
 
     public FrontendComponents(){
         registrationService = new RegistrationService();
@@ -28,107 +29,196 @@ public class FrontendComponents {
         productCatalogs=new ProductCatalog(admin);
     }
 
-    public void frontendView(){
-        while (!isExitPage){
-            if(!loggedIn){
-                displayWelcomePage();
-                Scanner scanner = new Scanner(System.in);
-                logger.info("Please Enter Your Choice: ");
-                if (scanner.hasNextLine()) {
-                    String choice = scanner.nextLine();
-                    switch(choice) {
-                        case "1":
-                            register();
-                            signIn();
-                            loggedIn=true;
-                            break;
-                        case "2":
-                            signIn();
-                            loggedIn=true;
-                            break;
-                        case "3":
-                            exit();
-                            break;
-                        default:
-                            logger.info("invalid input");
-                            break;
-                    }
-                }
-            }
-            else if(loggedIn && userFlag){
-                displayUserDashboard();
-                Scanner scanner = new Scanner(System.in);
-                logger.info("Please Enter Your Choice: ");
-                if (scanner.hasNextLine()) {
-                    String choice = scanner.nextLine();
-                    String search;
-                    switch (choice) {
-                        case "1":
-                            logger.log(Level.INFO, "You selected 'See all categories'");
-                            productCatalogs.printProductCategories();
-                            isInUserDashboard=true;
-                            break;
-                        case "2":
-                            logger.log(Level.INFO, "You selected 'Search for Product related to a specific category'");
-                            displayEnterYourValue();
-                            search=scanner.nextLine();
-                            productCatalogs.getProductsRelatedToSpecificCategory(search);
-                            break;
-                        case "3":
-                            logger.log(Level.INFO, "You selected 'See all products'");
-                            productCatalogs.printAllProductData();
-                            break;
-                        case "4":
-                            logger.log(Level.INFO, "You selected 'Search for a product'");
-                            displayEnterYourValue();
-                            search=scanner.nextLine();
-                            productCatalogs.searchProductByNameAndPrintDetails(search);
-                            break;
-                        case "5":
-                            logger.log(Level.INFO, "You selected 'Filter products by availability'");
-                            displayEnterYourValue();
-                            search=scanner.nextLine();
-                            productCatalogs.filterProductsByAvailabilityAndPrintProductNames(search);
-                            break;
-                        case "6":
-                            logger.log(Level.INFO, "Logging out...");
-                            loggedIn=false;
-                            userFlag=false;
-                            break;
-                        default:
-                            logger.log(Level.INFO, "Invalid choice. Please enter a valid option (1-6).");
-                            break;
-                    }
-                }
-            }
-            else if(loggedIn && adminFlag){
-                displayAdminDashboard();
-                Scanner scanner = new Scanner(System.in);
-                logger.info("Please Enter Your Choice: ");
-                if (scanner.hasNextLine()) {
-                    String choice = scanner.nextLine();
-                    String addCat;
-                    switch(choice) {
-                        case "1":
-                            displayEnterYourValue();
-                            addCat=scanner.nextLine();
-                            admin.addProductCategory(addCat);
-                            break;
-                        case "2":
-                            admin.printProductCategories();
-                            break;
-                        case "3":
-                            loggedIn=false;
-                            adminFlag=false;
-                            break;
-                        default:
-                            logger.info("invalid input");
-                            break;
-                    }
-                }
+
+    public void frontendView() {
+        while (!isExitPage) {
+            if (!loggedIn) {
+                handleWelcomePage();
+            } else if ( userFlag) {
+                handleUserDashboard();
+            } else if ( adminFlag) {
+                handleAdminDashboard();
             }
         }
     }
+
+    private void handleWelcomePage() {
+        displayWelcomePage();
+        Scanner scanner = new Scanner(System.in);
+        logger.info(message);
+        if (scanner.hasNextLine()) {
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    register();
+                    signIn();
+                    loggedIn = true;
+                    break;
+                case "2":
+                    signIn();
+                    loggedIn = true;
+                    break;
+                case "3":
+                    exit();
+                    break;
+                default:
+                    logger.info("invalid input");
+                    break;
+            }
+        }
+    }
+    private void handleUserDashboard() {
+        displayUserDashboard();
+        Scanner scanner = new Scanner(System.in);
+        logger.info(message);
+        if (scanner.hasNextLine()) {
+            String choice = scanner.nextLine();
+            String search;
+            switch (choice) {
+                case "1":
+                    logger.log(Level.INFO, "You selected 'See all categories'");
+                    productCatalogs.printProductCategories();
+                    isInUserDashboard=true;
+                    break;
+                case "2":
+                    logger.log(Level.INFO, "You selected 'Search for Product related to a specific category'");
+                    displayEnterYourValue();
+                    search=scanner.nextLine();
+                    productCatalogs.getProductsRelatedToSpecificCategory(search);
+                    break;
+                case "3":
+                    logger.log(Level.INFO, "You selected 'See all products'");
+                    productCatalogs.printAllProductData();
+                    break;
+                case "4":
+                    logger.log(Level.INFO, "You selected 'Search for a product'");
+                    displayEnterYourValue();
+                    search=scanner.nextLine();
+                    productCatalogs.searchProductByNameAndPrintDetails(search);
+                    break;
+                case "5":
+                    logger.log(Level.INFO, "You selected 'Filter products by availability'");
+                    displayEnterYourValue();
+                    search=scanner.nextLine();
+                    productCatalogs.filterProductsByAvailabilityAndPrintProductNames(search);
+                    break;
+                case "6":
+                    logger.log(Level.INFO, "Logging out...");
+                    loggedIn=false;
+                    userFlag=false;
+                    break;
+                default:
+                    logger.log(Level.INFO, "Invalid choice. Please enter a valid option (1-6).");
+                    break;
+            }
+        }
+    }
+    private void handleAdminDashboard() {
+        displayAdminDashboard();
+        Scanner scanner = new Scanner(System.in);
+        logger.info(message);
+        if (scanner.hasNextLine()) {
+            String choice = scanner.nextLine();
+            String addCat;
+
+            switch (choice) {
+                case "1":
+                    logger.log(Level.INFO, "You chose see all categories");
+                    admin.printProductCategories();
+                    break;
+                case "2":
+                    logger.log(Level.INFO, "You chose to Add a new catalog");
+                    displayEnterYourValue();
+                    addCat = scanner.nextLine();
+                    admin.addProductCategory(addCat);
+                    break;
+                case "3":
+                    logger.log(Level.INFO, "You chose to Edit an existing product category");
+                    logger.info("You Category");
+                    addCat = scanner.nextLine();
+                    logger.info("New Category Name");
+                    String newName=scanner.nextLine();
+                    admin.editProductCategory(addCat,newName);
+                    break;
+                case "4":
+                    logger.log(Level.INFO, "You chose to Delete an existing product category");
+                    displayEnterYourValue();
+                    addCat = scanner.nextLine();
+                    admin.deleteProductCategory(addCat);
+                    break;
+                case "5":
+                    logger.log(Level.INFO, "You chose see all products");
+                    productCatalogs.printAllProductData();
+                    break;
+                case "6":
+                    logger.log(Level.INFO, "You chose to Add a product listing");
+                    displayEnterYourValue();
+                    int id=scanner.nextInt();
+                    String name=scanner.nextLine();
+                    int price=scanner.nextInt();
+                    String desc=scanner.nextLine();
+                    String cat=scanner.nextLine();
+                    String ava=scanner.nextLine();
+                    admin.addProduct(id,name,desc,price,cat,ava);
+                    break;
+                case "7":
+                    logger.log(Level.INFO, "You chose to Update a product listing");
+                     displayEnterYourValue();
+                     id=scanner.nextInt();
+                     name=scanner.nextLine();
+                     price=scanner.nextInt();
+                     desc=scanner.nextLine();
+                     cat=scanner.nextLine();
+                     ava=scanner.nextLine();
+                    admin.updateProduct(id,name,desc,price,cat,ava);
+                    break;
+                case "8":
+                    logger.log(Level.INFO, "You chose to View customer accounts");
+                    registrationService.printRegisteredUsers();
+                    break;
+                case "9":
+                    logger.log(Level.INFO, "You chose to Search for a specific customer account");
+                    displayEnterYourValue();
+                    addCat = scanner.nextLine();
+                    registrationService.printRegisteredUser(addCat);
+                    break;
+                case "10":
+                    logger.log(Level.INFO, "You chose to Delete a customer account");
+                    displayEnterYourValue();
+                    addCat = scanner.nextLine();
+                    registrationService.deleteUser(addCat);
+                    break;
+                case "11":
+                    logger.log(Level.INFO, "You chose to Add a new customer account");
+                    register();
+                    break;
+                case "12":
+                    // Handle option 10
+                    logger.log(Level.INFO, "You chose to Schedule a new installation appointment");
+
+                    break;
+                case "13":
+                    // Handle option 11
+                    logger.log(Level.INFO, "You chose to Update an existing installation appointment");
+                    // Add your logic here
+                    break;
+                case "14":
+                    // Handle option 12
+                    logger.log(Level.INFO, "You chose to Cancel an existing installation appointment");
+                    // Add your logic here
+                    break;
+                case "0":
+                    logger.log(Level.INFO, "Exiting the Admin Dashboard. Goodbye!");
+                    adminFlag=false;
+                    loggedIn=false;
+                    break;
+                default:
+                    // Handle invalid input
+                    logger.log(Level.INFO, "Invalid choice. Please choose a valid option.");
+            }
+        }
+    }
+
     public void displayWelcomePage() {
         logger.log(Level.INFO, "Welcome to our application!");
         logger.log(Level.INFO, "1. Registration");
@@ -146,23 +236,22 @@ public class FrontendComponents {
     }
     public void displayAdminDashboard(){
         logger.log(Level.INFO, "Welcome to Admin dashboard");
-        logger.log(Level.INFO, "1. Add a new catalog");
-        logger.log(Level.INFO, "2. Edit an existing product category");
-        logger.log(Level.INFO, "3. Delete an existing product category");
-        logger.log(Level.INFO, "4. Add a product listing");
-        logger.log(Level.INFO, "5. Update a product listing");
-        logger.log(Level.INFO, "6. View customer accounts");
-        logger.log(Level.INFO, "7. Search for a specific customer account");
-        logger.log(Level.INFO, "8. Delete a customer account");
-        logger.log(Level.INFO, "9. Add a new customer account");
-        logger.log(Level.INFO, "10. Schedule a new installation appointment");
-        logger.log(Level.INFO, "11. Update an existing installation appointment");
-        logger.log(Level.INFO, "12. Cancel an existing installation appointment");
+        logger.log(Level.INFO, "1. See all Categories  2. Add a new catalog");
+        logger.log(Level.INFO, "");
+        logger.log(Level.INFO, "3. Edit an existing product category 4. Delete an existing product category 5. Add a product listing ");
+        logger.log(Level.INFO, "");
+        logger.log(Level.INFO, "6. Update a product listing 7. View customer accounts 8. Search for a specific customer account");
+        logger.log(Level.INFO, "");
+        logger.log(Level.INFO, "9. Delete a customer account 10. Add a new customer account 11. Schedule a new installation appointment");
+        logger.log(Level.INFO, "");
+        logger.log(Level.INFO, "12. Update an existing installation appointment 13. Cancel an existing installation appointment");
+        logger.log(Level.INFO, "");
+        logger.log(Level.INFO, "0. Exit");
 
     }
     public void displayEnterYourValue(){
         logger.info(" ");
-        logger.info("Please enter what you want to search for here");
+        logger.info("Please enter what you want");
         logger.info(" ");
     }
     public void register(){

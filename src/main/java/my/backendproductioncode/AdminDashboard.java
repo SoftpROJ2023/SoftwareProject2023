@@ -6,11 +6,20 @@ import java.util.logging.Logger;
 
 public class AdminDashboard {
     public static final Logger logger = Logger.getLogger(AdminDashboard.class.getName());
-    private final ArrayList<String> productCategories = new ArrayList<>(Arrays.asList("Electronics", "External"));
+    String interior="interior";
+    String exterior="exterior";
+    String electronics="electronics";
+    String inStock="In Stock";
+    String outOfStock="Out Of Stock";
+    private final ArrayList<String> productCategories = new ArrayList<>(Arrays.asList(interior, exterior ,electronics));
     private final Map<Integer, Product> productMap = new HashMap<>();
     {
-        productMap.put(1, new Product(1, "AA", "Product 1", 10.0, "ele", "In Stock"));
-        productMap.put(2, new Product(2, "BB", "Product 2", 15.0, "clothing", "Out of Stock"));
+        productMap.put(1, new Product(1, "Car Alarms", "It is Car Alarms", 10.0, electronics, inStock));
+        productMap.put(2, new Product(2, "GPS Navigation Devices", "It is GPS Navigation Devices", 150.0, electronics, outOfStock));
+        productMap.put(3, new Product(3, "LED Headlights", "It is LED Headlights", 150.0, exterior, outOfStock));
+        productMap.put(4, new Product(4, "Car Cover", "It is Car Cover", 150.0, exterior, inStock));
+        productMap.put(5, new Product(5, "Seat Covers", "It is Seat Covers", 150.0, interior, inStock));
+        productMap.put(6, new Product(6, "Car Audio System", "It is Car Audio System", 150.0, interior, outOfStock));
     }
     private final List<Appointment> appointments;
     private static final String SCHEDULED = "Scheduled";
