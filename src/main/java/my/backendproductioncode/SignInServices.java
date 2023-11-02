@@ -5,7 +5,7 @@ import java.util.Map;
 public class SignInServices {
 
     RegistrationService registrationService = new RegistrationService();
-    Map<String, User> users = registrationService.getRegisteredUsers();
+    Map<String, Userinformation> users = registrationService.getRegisteredUsers();
 
     public SignInServices() {
     //
@@ -13,9 +13,9 @@ public class SignInServices {
 
 
     public String signInUser(String username, String password) {
-        User user = users.get(username);
+        Userinformation user = users.get(username);
         if (user != null) {
-            if (user.password().equals(password)) {
+            if (user.getPassword().equals(password)) {
                 return "Password is valid. User can be signed in.";
             } else {
                 return "Invalid password. User cannot be signed in.";

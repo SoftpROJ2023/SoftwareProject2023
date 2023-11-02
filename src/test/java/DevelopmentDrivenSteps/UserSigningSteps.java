@@ -32,7 +32,6 @@ public class UserSigningSteps {
     @Then("the user should be successfully signed in")
     public void the_user_should_be_successfully_signed_in() {
         Assert.assertEquals("Password is valid. User can be signed in.", signInResult);
-
     }
 
     @Then("the user should see an error message")

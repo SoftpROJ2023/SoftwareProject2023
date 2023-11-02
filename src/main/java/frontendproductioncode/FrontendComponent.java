@@ -23,18 +23,19 @@ public class FrontendComponent {
                 scanner.nextLine();
             } catch (java.util.InputMismatchException e) {
                 logger.log(Level.WARNING,"Invalid input. Please enter a number.");
-                scanner.nextLine(); // Clear the input buffer
+                scanner.nextLine();
                 continue;
             }
 
             switch (choice) {
                 case 1:
-                    // Implement registration logic here
+                    logger.log(Level.INFO,"====================Register===============");
                     logger.log(Level.INFO,"You selected 'Register'.");
-                    break;
+
                 case 2:
-                    // Implement login logic here
+                    logger.log(Level.INFO,"====================Login===============");
                     logger.log(Level.INFO,"You selected 'Login'.");
+
                     break;
                 case 3:
                     logger.log(Level.INFO,"Exiting...");

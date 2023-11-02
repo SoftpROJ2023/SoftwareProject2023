@@ -27,7 +27,6 @@ public  class UserRegistrationSteps {
             String email = registrationData.get("email");
             String password = registrationData.get("password");
             String confirmPassword = registrationData.get("confirm password");
-
             RegistrationService registrationService = new RegistrationService();
             registrationResult = registrationService.registerUser(username, email, password, confirmPassword);
         }
@@ -41,14 +40,12 @@ public  class UserRegistrationSteps {
 
     @Then("the user should see an error message indicating password mismatch")
     public void theUserShouldSeeAnErrorMessageIndicatingPasswordMismatch() {
-        // Use the assert() method to verify the registration result
         Assert.assertEquals("Password and confirm password do not match", registrationResult);
     }
 
 
     @Then("the user should see an error message indicating an invalid email address")
     public void theUserShouldSeeAnErrorMessageIndicatingAnInvalidEmailAddress() {
-        // Use the assert() method to verify the registration result
         Assert.assertEquals("Invalid email address", registrationResult);
     }
 

@@ -2,7 +2,6 @@ package my.backendproductioncode;
 
 public class Product {
     private final int productId;
-
     private  String name;
     private String description;
     private double price;
@@ -17,8 +16,6 @@ public class Product {
         this.category = category;
         this.availability = availability;
     }
-
-
     public int getProductId() {
         return productId;
     }

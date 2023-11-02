@@ -91,7 +91,7 @@ public class AdminDashboardStepDefinitions {
 
 
 
-@When("they add a new product with the following details:")
+    @When("they add a new product with the following details:")
     public void theyAddANewProductWithTheFollowingDetails(io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> productDetails = dataTable.asMaps();
         Map<String, String> details = productDetails.get(0);
