@@ -22,7 +22,7 @@ public class FrontendComponents {
     AdminDashboard admin;
     ProductCatalog productCatalogs;
     static boolean isExitPage = false;
-    boolean loggedIn = false;
+    boolean loggedIn;
     boolean adminFlag = false;
     boolean userFlag = false;
     boolean isInUserDashboard=false;
@@ -37,12 +37,13 @@ public class FrontendComponents {
 
 
     public void frontendView() {
+        loggedIn=false;
         while (!isExitPage) {
             if (!loggedIn) {
                 handleWelcomePage();
             } else if ( userFlag) {
                 handleUserDashboard();
-            } else if ( adminFlag) {
+            } else if (adminFlag) {
                 handleAdminDashboard();
             }
         }
@@ -58,11 +59,9 @@ public class FrontendComponents {
                 case "1":
                     register();
                     signIn();
-                    loggedIn = true;
                     break;
                 case "2":
                     signIn();
-                    loggedIn = true;
                     break;
                 case "3":
                     exit();
@@ -271,14 +270,17 @@ public class FrontendComponents {
         logger.info("Welcome to the Sign-in page!");
         logger.info("Username: ");
         String username = scanner.nextLine();
-        if (username.equals("Admin")) {
-            adminFlag = true; // Set adminFlag to true if the username is "Admin"
-        }else {
-            userFlag=true;
-        }
         logger.info("Password: ");
         String password = scanner.nextLine();
-        signInService.signInUser(registrationService,username,password);
+        loggedIn=signInService.signInUser(registrationService,username,password);
+        if(loggedIn){
+            if (username.equals("Admin")) {
+                adminFlag = true; // Set adminFlag to true if the username is "Admin"
+            }else {
+                userFlag=true;
+            }
+        }
+
     }
     public static void readInputFromUser() {
         Scanner scanner = new Scanner(System.in);

@@ -5,12 +5,11 @@ import java.util.logging.Logger;
 
 public class SignInServices {
     private static final Logger logger = Logger.getLogger(SignInServices.class.getName());
-    private RegistrationService registrationService =new RegistrationService();
+    private final RegistrationService registrationService =new RegistrationService();
     Map<String, User> users = registrationService.getRegisteredUsers();
 
 
     public String signInUser(String username, String password) {
-        System.out.println(users);
         User user = users.get(username);
         if (user != null) {
             if (user.password().equals(password)) {
@@ -25,7 +24,7 @@ public class SignInServices {
             return "User not found. User cannot be signed in.";
         }
     }
-    public void signInUser(RegistrationService myReg, String username, String password) {
+    public boolean signInUser(RegistrationService myReg, String username, String password) {
         // Step 1: Get the Map of registered users from myReg
         Map<String, User> registeredUsers = myReg.getRegisteredUsers();
 
@@ -36,6 +35,7 @@ public class SignInServices {
             if (user.password().equals(password)) {
                 // Username and password are valid for sign-in
                 logger.info("Sign-in successful for user: " + username);
+                return true;
             } else {
                 // Incorrect password
                 logger.info("Incorrect password for user: " + username);
@@ -44,7 +44,9 @@ public class SignInServices {
             // If the username is not found in the Map of registered users
             logger.info("User not found: " + username);
         }
+        return false; // Sign-in was not successful
     }
+
 
 }
 
