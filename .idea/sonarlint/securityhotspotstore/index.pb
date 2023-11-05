@@ -44,3 +44,13 @@ m
 =src/test/java/DevelopmentDrivenSteps/ProductCatalogSteps.java,8\8\88627f974b53b83c70ddbefc140db444c72b9819
 l
 <src/main/java/frontendproductioncode/FrontendComponents.java,b\7\b7776fdeb5054c13f69ad8c05fa83b202ad689bb
+G
+cases/UserRoles.feature,1\f\1f1974c43b9b909272fc38342774ffdbeb6d776f
+O
+cases/UserRolesForAdmin.feature,8\6\869ad286509ec67eb034781338326c98833616c1
+k
+;src/test/java/DevelopmentDrivenSteps/UserRolesForAdmin.java,a\e\aefebe50611bf7d7fa76e17ec29381dd8650111c
+R
+"cases/UserRolesForCustomer.feature,5\1\51e25c80299d84b5f996c1b6ca0f6680002bc2c9
+S
+#cases/UserRolesForInstaller.feature,b\a\ba5dd052b6e3297c323f5837ccf48bb28e8bda7a
