@@ -70,7 +70,15 @@ public class ProductCatalog {
 
         return foundProduct; // Return whether the product was found
     }
+    public Product getProduct(String productName) {
+        for (Product product : products.values()) {
+            if (product.getName().equalsIgnoreCase(productName)) {
+                return product; // Return the matching Product object
+            }
+        }
 
+        return null; // Return null if the product is not found
+    }
     public boolean filterProductsByAvailabilityAndPrintProductNames(String availability) {
         List<Product> inStockProducts = new ArrayList<>();
 

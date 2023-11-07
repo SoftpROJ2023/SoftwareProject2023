@@ -1,15 +1,13 @@
-Feature: Installer role functionality
+Feature: Installer Role Functionality
 
-  Background:
-    Given the user is logged in as an installer
-
-  Scenario: Installer views installation requests
+  Scenario: Viewing Installation Requests
+    Given that the user is logged in as an installer
     When the installer accesses the installation request list
-    Then the installer should see a list of pending installation requests
+    Then the installer should be able to view a list of pending installations
 
-  Scenario: Installer schedules an appointment
-    When the installer schedules an appointment for the following request:
-      | Request ID | Date       | Time     |
-      | 12345      | 2023-11-10 | 14:00:00 |
-    Then the appointment should be scheduled successfully
-
+  Scenario: Scheduling an Appointment
+    Given that the user is logged in as an installer
+    When I provide the following appointment details:
+      | Appointment ID | Customer Name | Product | Scheduled Date | Scheduled Time | Status |
+      | 12345 | John Doe | CA Accessory XYZ | 25th Oct 2023 | 10:00 AM - 12:00 PM | Scheduled |
+    Then You should observe the new appointment listed among the installation appointments.

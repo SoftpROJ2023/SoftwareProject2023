@@ -8,10 +8,9 @@ Feature: Customer role functionality
     Then the customer should see a list of available products
 
   Scenario: Customer makes a purchase
-    When the customer adds the following product to the cart:
-      | Product Name   | Quantity |
-      | ProductA       | 2        |
-    And the customer completes the purchase
+    When the customer adds the following product to the cart purchase:
+      | Product Name |  |
+      | Car Cover    |  |
     Then the customer should see a purchase confirmation
 
   Scenario: Customer views orders

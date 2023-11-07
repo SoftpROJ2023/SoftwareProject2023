@@ -44,8 +44,6 @@ m
 =src/test/java/DevelopmentDrivenSteps/ProductCatalogSteps.java,8\8\88627f974b53b83c70ddbefc140db444c72b9819
 l
 <src/main/java/frontendproductioncode/FrontendComponents.java,b\7\b7776fdeb5054c13f69ad8c05fa83b202ad689bb
-G
-cases/UserRoles.feature,1\f\1f1974c43b9b909272fc38342774ffdbeb6d776f
 O
 cases/UserRolesForAdmin.feature,8\6\869ad286509ec67eb034781338326c98833616c1
 k
@@ -54,3 +52,11 @@ R
 "cases/UserRolesForCustomer.feature,5\1\51e25c80299d84b5f996c1b6ca0f6680002bc2c9
 S
 #cases/UserRolesForInstaller.feature,b\a\ba5dd052b6e3297c323f5837ccf48bb28e8bda7a
+n
+>src/test/java/DevelopmentDrivenSteps/UserRolesForCustomer.java,0\9\09ccbb94add77d45bb663820c8684bbd744bd9cd
+d
+4src/main/java/my/backendproductioncode/Purchase.java,e\e\ee34643940bc9fa45e9822a636b40959389598a5
+o
+?src/test/java/DevelopmentDrivenSteps/UserRolesForInstaller.java,e\c\ec8a082bba9d6c6073a5c5c2259da4467592b5aa
+K
+cases/UserRolesForInstaller,c\2\c2d090ba319c79fb776b3ed7350756395d4327bd

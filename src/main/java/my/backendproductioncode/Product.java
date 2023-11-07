@@ -60,4 +60,5 @@ public class Product {
     public void setAvailability(String availability) {
         this.availability = availability;
     }
+
 }
