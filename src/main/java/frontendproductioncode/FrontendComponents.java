@@ -1,9 +1,6 @@
 package frontendproductioncode;
 
-import my.backendproductioncode.AdminDashboard;
-import my.backendproductioncode.ProductCatalog;
-import my.backendproductioncode.RegistrationService;
-import my.backendproductioncode.SignInServices;
+import my.backendproductioncode.*;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -21,6 +18,7 @@ public class FrontendComponents {
     SignInServices signInService;
     AdminDashboard admin;
     ProductCatalog productCatalogs;
+    Purchase purchase;
     static boolean isExitPage = false;
     boolean loggedIn;
     boolean adminFlag = false;
@@ -33,6 +31,7 @@ public class FrontendComponents {
         signInService = new SignInServices();
         admin=new AdminDashboard();
         productCatalogs=new ProductCatalog(admin);
+        purchase=new Purchase();
     }
 
 
@@ -83,12 +82,12 @@ public class FrontendComponents {
                 case "1":
                     logger.log(Level.INFO, "You selected 'See all categories'");
                     productCatalogs.printProductCategories();
-                    isInUserDashboard=true;
+                    isInUserDashboard = true;
                     break;
                 case "2":
                     logger.log(Level.INFO, "You selected 'Search for Product related to a specific category'");
                     displayEnterYourValue();
-                    search=scanner.nextLine();
+                    search = scanner.nextLine();
                     productCatalogs.getProductsRelatedToSpecificCategory(search);
                     break;
                 case "3":
@@ -98,22 +97,32 @@ public class FrontendComponents {
                 case "4":
                     logger.log(Level.INFO, "You selected 'Search for a product'");
                     displayEnterYourValue();
-                    search=scanner.nextLine();
+                    search = scanner.nextLine();
                     productCatalogs.searchProductByNameAndPrintDetails(search);
                     break;
                 case "5":
                     logger.log(Level.INFO, "You selected 'Filter products by availability'");
                     displayEnterYourValue();
-                    search=scanner.nextLine();
+                    search = scanner.nextLine();
                     productCatalogs.filterProductsByAvailabilityAndPrintProductNames(search);
                     break;
                 case "6":
+                    logger.log(Level.INFO, "You selected 'Purchase a product'");
+                    displayEnterYourValue();
+                    search = scanner.nextLine();
+                    purchase.addProductToCart(productCatalogs.getProduct(search));
+                    break;
+                case "7":
+                    logger.log(Level.INFO, "You selected 'See all orders'");
+                    purchase.printOrders();
+                    break;
+                case "8":
                     logger.log(Level.INFO, "Logging out...");
-                    loggedIn=false;
-                    userFlag=false;
+                    loggedIn = false;
+                    userFlag = false;
                     break;
                 default:
-                    logger.log(Level.INFO, "Invalid choice. Please enter a valid option (1-6).");
+                    logger.log(Level.INFO, "Invalid choice. Please enter a valid option (1-8).");
                     break;
             }
         }
@@ -219,13 +228,16 @@ public class FrontendComponents {
     }
     public void displayUserDashboard() {
         logger.log(Level.INFO, "Welcome to user dashboard");
-        logger.log(Level.INFO, "1. See all categories ");
+        logger.log(Level.INFO, "1. See all categories");
         logger.log(Level.INFO, "2. Search for Product related to a specific category");
         logger.log(Level.INFO, "3. See all products");
         logger.log(Level.INFO, "4. Search for a product");
         logger.log(Level.INFO, "5. Filter products by availability");
-        logger.log(Level.INFO, "6. Log out");
+        logger.log(Level.INFO, "6. Purchase a product");
+        logger.log(Level.INFO, "7. See all orders");
+        logger.log(Level.INFO, "8. Log out");
     }
+
     public void displayAdminDashboard(){
         logger.log(Level.INFO, "Welcome to Admin dashboard");
         logger.log(Level.INFO, "1. See all Categories  2. Add a new catalog 3. Edit an existing product category");

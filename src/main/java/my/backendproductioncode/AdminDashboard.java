@@ -113,6 +113,29 @@ public class AdminDashboard {
         return false;
     }
 
+    public boolean logAppointments() {
+        try {
+            for (Appointment appointment : appointments) {
+                int appointmentId = appointment.appointmentId();
+                String customerName = appointment.customerName();
+                String product = appointment.product();
+                String scheduledDate = appointment.scheduledDate();
+                String scheduledTime = appointment.scheduledTime();
+                String status = appointment.status();
+
+                logger.info("Appointment ID: " + appointmentId +
+                        ", Customer Name: " + customerName +
+                        ", Product: " + product +
+                        ", Scheduled Date: " + scheduledDate +
+                        ", Scheduled Time: " + scheduledTime +
+                        ", Status: " + status);
+            }
+            return true; // Logging was successful
+        } catch (Exception e) {
+            logger.severe("Error logging appointments: " + e.getMessage());
+            return false; // Logging encountered an error
+        }
+    }
     public String  addAppointment(Appointment appointment) {
         appointments.add(appointment);
         return "Added successfully";
