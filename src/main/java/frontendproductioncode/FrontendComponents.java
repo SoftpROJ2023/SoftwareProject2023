@@ -109,6 +109,9 @@ public class FrontendComponents {
                     seeAllOrders();
                     break;
                 case "8":
+                    editUserProfile(scanner);
+                    break;
+                case "9":
                     logOut();
                     break;
                 default:
@@ -198,7 +201,8 @@ public class FrontendComponents {
         logger.log(Level.INFO, "5. Filter products by availability");
         logger.log(Level.INFO, "6. Purchase a product");
         logger.log(Level.INFO, "7. See all orders");
-        logger.log(Level.INFO, "8. Log out");
+        logger.log(Level.INFO, "8. Edit Your Profile");
+        logger.log(Level.INFO, "9. Log out");
     }
 
     public void displayAdminDashboard(){
@@ -355,6 +359,19 @@ public class FrontendComponents {
         loggedIn = false;
         userFlag = false;
     }
+    private void editUserProfile(Scanner scanner){
+        logger.info("Please enter new information");
+        String usernameToUpdate=scanner.nextLine();
+        String newEmail=scanner.nextLine();
+        String newPassword=scanner.nextLine();
+        boolean updateSuccessful = registrationService.updateUser(usernameToUpdate, newEmail, newPassword);
+        if (updateSuccessful) {
+            logOut();
+        } else {
+            logger.info("User not found or update failed.");
+            logOut();
+        }
+    }
 
     private void seeAllCategoriesAdmin() {
         logger.log(Level.INFO, "You chose see all categories");
@@ -455,4 +472,5 @@ public class FrontendComponents {
         int idApp = scanner.nextInt();
         logger.info(admin.deleteAppointment(idApp));
     }
+
 }

@@ -58,3 +58,7 @@ d
 4src/main/java/my/backendproductioncode/Purchase.java,e\e\ee34643940bc9fa45e9822a636b40959389598a5
 o
 ?src/test/java/DevelopmentDrivenSteps/UserRolesForInstaller.java,e\c\ec8a082bba9d6c6073a5c5c2259da4467592b5aa
+I
+cases/UserProfile.feature,1\c\1cbe8995e9702fa7856f7c4095a278717d437b5c
+i
+9src/test/java/DevelopmentDrivenSteps/UserProfileStep.java,8\5\8577d93ffa7c41b64193fe460b3f1275f37103a8
