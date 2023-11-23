@@ -19,12 +19,20 @@ public class FrontendComponents {
     AdminDashboard admin;
     ProductCatalog productCatalogs;
     Purchase purchase;
+    Appointment appointment;
     static boolean isExitPage = false;
     boolean loggedIn;
     boolean adminFlag = false;
     boolean userFlag = false;
     boolean isInUserDashboard=false;
     String message="Please Enter Your Choice:";
+    //data for appointment
+    int appointmentId ;
+    String customerName;
+    String product;
+    String scheduledDate;
+    String scheduledTime;
+    String status;
 
     public FrontendComponents(){
         registrationService = new RegistrationService();
@@ -75,51 +83,33 @@ public class FrontendComponents {
         displayUserDashboard();
         Scanner scanner = new Scanner(System.in);
         logger.info(message);
+
         if (scanner.hasNextLine()) {
             String choice = scanner.nextLine();
-            String search;
             switch (choice) {
                 case "1":
-                    logger.log(Level.INFO, "You selected 'See all categories'");
-                    productCatalogs.printProductCategories();
-                    isInUserDashboard = true;
+                    seeAllCategories();
                     break;
                 case "2":
-                    logger.log(Level.INFO, "You selected 'Search for Product related to a specific category'");
-                    displayEnterYourValue();
-                    search = scanner.nextLine();
-                    productCatalogs.getProductsRelatedToSpecificCategory(search);
+                    searchProductByCategory(scanner);
                     break;
                 case "3":
-                    logger.log(Level.INFO, "You selected 'See all products'");
-                    productCatalogs.printAllProductData();
+                    seeAllProducts();
                     break;
                 case "4":
-                    logger.log(Level.INFO, "You selected 'Search for a product'");
-                    displayEnterYourValue();
-                    search = scanner.nextLine();
-                    productCatalogs.searchProductByNameAndPrintDetails(search);
+                    searchForProduct(scanner);
                     break;
                 case "5":
-                    logger.log(Level.INFO, "You selected 'Filter products by availability'");
-                    displayEnterYourValue();
-                    search = scanner.nextLine();
-                    productCatalogs.filterProductsByAvailabilityAndPrintProductNames(search);
+                    filterProductsByAvailability(scanner);
                     break;
                 case "6":
-                    logger.log(Level.INFO, "You selected 'Purchase a product'");
-                    displayEnterYourValue();
-                    search = scanner.nextLine();
-                    purchase.addProductToCart(productCatalogs.getProduct(search));
+                    purchaseProduct(scanner);
                     break;
                 case "7":
-                    logger.log(Level.INFO, "You selected 'See all orders'");
-                    purchase.printOrders();
+                    seeAllOrders();
                     break;
                 case "8":
-                    logger.log(Level.INFO, "Logging out...");
-                    loggedIn = false;
-                    userFlag = false;
+                    logOut();
                     break;
                 default:
                     logger.log(Level.INFO, "Invalid choice. Please enter a valid option (1-8).");
@@ -131,90 +121,62 @@ public class FrontendComponents {
         displayAdminDashboard();
         Scanner scanner = new Scanner(System.in);
         logger.info(message);
+
         if (scanner.hasNextLine()) {
             String choice = scanner.nextLine();
-            String addCat;
 
             switch (choice) {
                 case "1":
-                    logger.log(Level.INFO, "You chose see all categories");
-                    admin.printProductCategories();
+                    seeAllCategoriesAdmin();
                     break;
                 case "2":
-                    logger.log(Level.INFO, "You chose to Add a new catalog");
-                    displayEnterYourValue();
-                    addCat = scanner.nextLine();
-                    admin.addProductCategory(addCat);
+                    addNewCatalog(scanner);
                     break;
                 case "3":
-                    logger.log(Level.INFO, "You chose to Edit an existing product category");
-                    logger.info("You Category");
-                    addCat = scanner.nextLine();
-                    logger.info("New Category Name");
-                    String newName=scanner.nextLine();
-                    admin.editProductCategory(addCat,newName);
+                    editExistingProductCategory(scanner);
                     break;
                 case "4":
-                    logger.log(Level.INFO, "You chose to Delete an existing product category");
-                    displayEnterYourValue();
-                    addCat = scanner.nextLine();
-                    admin.deleteProductCategory(addCat);
+                    deleteExistingProductCategory(scanner);
                     break;
                 case "5":
-                    logger.log(Level.INFO, "You chose see all products");
-                    productCatalogs.printAllProductData();
+                    seeAllProductsAdmin();
                     break;
                 case "6":
-                    logger.log(Level.INFO, "You chose to Add a product listing");
-                    readInputFromUser();
-                    admin.addProduct(id, name, description, price, category, availability);
+                    addProductListing();
                     break;
                 case "7":
-                    logger.log(Level.INFO, "You chose to Update a product listing");
-
+                    updateProductListing(scanner);
                     break;
                 case "8":
-                    logger.log(Level.INFO, "You chose to View customer accounts");
-                    registrationService.printRegisteredUsers();
+                    viewCustomerAccounts();
                     break;
                 case "9":
-                    logger.log(Level.INFO, "You chose to Search for a specific customer account");
-                    displayEnterYourValue();
-                    addCat = scanner.nextLine();
-                    registrationService.printRegisteredUser(addCat);
+                    searchForCustomerAccount(scanner);
                     break;
                 case "10":
-                    logger.log(Level.INFO, "You chose to Delete a customer account");
-                    displayEnterYourValue();
-                    addCat = scanner.nextLine();
-                    registrationService.deleteUser(addCat);
+                    deleteCustomerAccount(scanner);
                     break;
                 case "11":
-                    logger.log(Level.INFO, "You chose to Add a new customer account");
-                    register();
+                    addNewCustomerAccount();
                     break;
                 case "12":
-                    // Handle option 10
-                    logger.log(Level.INFO, "You chose to Schedule a new installation appointment");
-
+                    scheduleNewInstallationAppointment();
                     break;
                 case "13":
-                    // Handle option 11
-                    logger.log(Level.INFO, "You chose to Update an existing installation appointment");
-                    // Add your logic here
+                    viewAllInstallationAppointments();
                     break;
                 case "14":
-                    // Handle option 12
-                    logger.log(Level.INFO, "You chose to Cancel an existing installation appointment");
-                    // Add your logic here
+                    updateExistingInstallationAppointment(scanner);
+                    break;
+                case "15":
+                    cancelExistingInstallationAppointment(scanner);
                     break;
                 case "0":
                     logger.log(Level.INFO, "Exiting the Admin Dashboard. Goodbye!");
-                    adminFlag=false;
-                    loggedIn=false;
+                    adminFlag = false;
+                    loggedIn = false;
                     break;
                 default:
-                    // Handle invalid input
                     logger.log(Level.INFO, "Invalid choice. Please choose a valid option.");
             }
         }
@@ -226,6 +188,7 @@ public class FrontendComponents {
         logger.log(Level.INFO, "2. Log In");
         logger.log(Level.INFO, "3. Exit");
     }
+
     public void displayUserDashboard() {
         logger.log(Level.INFO, "Welcome to user dashboard");
         logger.log(Level.INFO, "1. See all categories");
@@ -317,11 +280,179 @@ public class FrontendComponents {
         logger.info("Enter Availability (String): ");
         availability = scanner.nextLine();
     }
+    public  Appointment readInputForAppointment() {
+        Scanner scanner = new Scanner(System.in);
+        logger.info("Enter an Appointment ID (integer): ");
+        appointmentId = scanner.nextInt();
 
+        logger.info("Enter Customer Name (string): ");
+        scanner.nextLine(); // Consume the newline character
+        customerName = scanner.nextLine();
+
+        logger.info("Enter Product (string): ");
+        product = scanner.nextLine();
+
+        logger.info("Enter Scheduled Date (string): ");
+        scheduledDate = scanner.nextLine();
+
+        logger.info("Enter Scheduled Time (string): ");
+        scheduledTime = scanner.nextLine();
+
+        logger.info("Enter Status (string): ");
+        status = scanner.nextLine();
+        return new Appointment(appointmentId, customerName, product, scheduledDate, scheduledTime, status);
+    }
     public static void exit() {
         isExitPage =true;
         logger.info("Exit function called.");
     }
+    private void seeAllCategories( ) {
+        logger.log(Level.INFO, "You selected 'See all categories'");
+        productCatalogs.printProductCategories();
+        isInUserDashboard = true;
+    }
 
+    private void searchProductByCategory(Scanner scanner) {
+        logger.log(Level.INFO, "You selected 'Search for Product related to a specific category'");
+        displayEnterYourValue();
+        String search = scanner.nextLine();
+        productCatalogs.getProductsRelatedToSpecificCategory(search);
+    }
+
+    private void seeAllProducts( ) {
+        logger.log(Level.INFO, "You selected 'See all products'");
+        productCatalogs.printAllProductData();
+    }
+
+    private void searchForProduct(Scanner scanner) {
+        logger.log(Level.INFO, "You selected 'Search for a product'");
+        displayEnterYourValue();
+        String search = scanner.nextLine();
+        productCatalogs.searchProductByNameAndPrintDetails(search);
+    }
+
+    private void filterProductsByAvailability(Scanner scanner) {
+        logger.log(Level.INFO, "You selected 'Filter products by availability'");
+        displayEnterYourValue();
+        String search = scanner.nextLine();
+        productCatalogs.filterProductsByAvailabilityAndPrintProductNames(search);
+    }
+
+    private void purchaseProduct(Scanner scanner) {
+        logger.log(Level.INFO, "You selected 'Purchase a product'");
+        displayEnterYourValue();
+        String search = scanner.nextLine();
+        purchase.addProductToCart(productCatalogs.getProduct(search));
+    }
+
+    private void seeAllOrders( ) {
+        logger.log(Level.INFO, "You selected 'See all orders'");
+        purchase.printOrders();
+    }
+
+    private void logOut( ) {
+        logger.log(Level.INFO, "Logging out...");
+        loggedIn = false;
+        userFlag = false;
+    }
+
+    private void seeAllCategoriesAdmin() {
+        logger.log(Level.INFO, "You chose see all categories");
+        admin.printProductCategories();
+    }
+
+    private void addNewCatalog(Scanner scanner) {
+        logger.log(Level.INFO, "You chose to Add a new catalog");
+        displayEnterYourValue();
+        String addCat = scanner.nextLine();
+        admin.addProductCategory(addCat);
+    }
+
+    private void editExistingProductCategory(Scanner scanner) {
+        logger.log(Level.INFO, "You chose to Edit an existing product category");
+        logger.info("You Category");
+        String addCat = scanner.nextLine();
+        logger.info("New Category Name");
+        String newName = scanner.nextLine();
+        admin.editProductCategory(addCat, newName);
+    }
+
+    private void deleteExistingProductCategory(Scanner scanner) {
+        logger.log(Level.INFO, "You chose to Delete an existing product category");
+        displayEnterYourValue();
+        String addCat = scanner.nextLine();
+        admin.deleteProductCategory(addCat);
+    }
+
+    private void seeAllProductsAdmin() {
+        logger.log(Level.INFO, "You chose see all products");
+        productCatalogs.printAllProductData();
+    }
+
+    private void addProductListing( ) {
+        logger.log(Level.INFO, "You chose to Add a product listing");
+        readInputFromUser();
+        admin.addProduct(id, name, description, price, category, availability);
+    }
+
+    private void updateProductListing(Scanner scanner) {
+        logger.log(Level.INFO, "You chose to Update a product listing");
+        logger.info("Enter the name of the product whose data you want to modify");
+        String productNameForEdit = scanner.nextLine();
+        int returnProduct = admin.getProductByName(productNameForEdit);
+        if (returnProduct == 0) {
+            logger.info("Product not found: " + productNameForEdit);
+            return;
+        }
+        logger.info("The product whose information you want to modify already exists and This is the ID of the product should be enter in Id " + returnProduct);
+        readInputFromUser();
+        logger.info(admin.updateProduct(id, name, description, price, category, availability));
+    }
+
+    private void viewCustomerAccounts() {
+        logger.log(Level.INFO, "You chose to View customer accounts");
+        registrationService.printRegisteredUsers();
+    }
+
+    private void searchForCustomerAccount(Scanner scanner) {
+        logger.log(Level.INFO, "You chose to Search for a specific customer account");
+        displayEnterYourValue();
+        String addCat = scanner.nextLine();
+        registrationService.printRegisteredUser(addCat);
+    }
+
+    private void deleteCustomerAccount(Scanner scanner) {
+        logger.log(Level.INFO, "You chose to Delete a customer account");
+        displayEnterYourValue();
+        String addCat = scanner.nextLine();
+        registrationService.deleteUser(addCat);
+    }
+
+    private void addNewCustomerAccount() {
+        logger.log(Level.INFO, "You chose to Add a new customer account");
+        register();
+    }
+
+    private void scheduleNewInstallationAppointment( ) {
+        appointment = readInputForAppointment();
+        logger.info(admin.addAppointment(appointment));
+    }
+
+    private void viewAllInstallationAppointments() {
+        logger.log(Level.INFO, "You chose to View all installation appointment");
+        admin.logAppointments();
+    }
+
+    private void updateExistingInstallationAppointment(Scanner scanner) {
+        displayEnterYourValue();
+        int idApp = scanner.nextInt();
+        appointment = readInputForAppointment();
+        logger.info(admin.updateAppointment(idApp, appointment));
+    }
+
+    private void cancelExistingInstallationAppointment(Scanner scanner) {
+        displayEnterYourValue();
+        int idApp = scanner.nextInt();
+        logger.info(admin.deleteAppointment(idApp));
+    }
 }
-

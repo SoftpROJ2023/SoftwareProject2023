@@ -69,8 +69,8 @@ Feature: Admin Dashboard - Manage Product Categories
   Scenario: Schedule a new installation appointment
     Given I am logged in as an admin
     When I provide the appointment details as follows:
-      | Appointment ID | Customer Name | Product          |  | Scheduled Date | Scheduled Time      | Status    |
-      | 12345          | John Doe      | CA Accessory XYZ |  | 25th Oct 2023  | 10:00 AM - 12:00 PM | Scheduled |
+      | Appointment ID | Customer Name | Product          | Scheduled Date | Scheduled Time      | Status    |  |
+      | 100            | John Doe      | CA Accessory XYZ | 25th Oct 2023  | 8:00 AM - 9:00 PM | Scheduled |  |
     Then I should see the new appointment in the list of installation appointments
 
   Scenario: Update an existing installation appointment

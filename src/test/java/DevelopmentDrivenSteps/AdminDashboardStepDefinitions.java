@@ -217,6 +217,7 @@ public class AdminDashboardStepDefinitions {
     public void i_provide_the_appointment_details_as_follows(DataTable dataTable) {
         List<List<String>> appointmentData = dataTable.asLists(String.class);
         int appointmentId = Integer.parseInt(appointmentData.get(1).get(0));
+        System.out.println(appointmentId);
         String customerName = appointmentData.get(1).get(1);
         String product = appointmentData.get(1).get(2);
         String scheduledDate = appointmentData.get(1).get(3);
@@ -224,6 +225,8 @@ public class AdminDashboardStepDefinitions {
         String status = appointmentData.get(1).get(5);
 
         Appointment appointment = new Appointment(appointmentId, customerName, product, scheduledDate, scheduledTime, status);
+        System.out.println(appointment);
+
         this.appointment =adminDashboard.addAppointment(appointment);
     }
     @Then("I should see the new appointment in the list of installation appointments")
@@ -241,7 +244,6 @@ public class AdminDashboardStepDefinitions {
         String scheduledDate = appointmentData.get(1).get(3);
         String scheduledTime = appointmentData.get(1).get(4);
         String status = appointmentData.get(1).get(5);
-
         Appointment updatedAppointment = new Appointment(appointmentId, customerName, product, scheduledDate, scheduledTime, status);
         appointment=adminDashboard.updateAppointment(appointmentId, updatedAppointment);
     }

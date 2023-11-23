@@ -85,8 +85,19 @@ public class AdminDashboard {
         }
 
     }
+    public int getProductByName(String name) {
+        // Assuming productMap is a Map<String, Product> where String is the product ID
+        for (Product product : productMap.values()) {
+            if (product.getName().equals(name)) {
 
-    public void updateProduct(int productId, String name, String description, double price, String category, String availability) {
+                return product.getProductId();
+            }
+        }
+        // Handle the case where the product with the given name is not found in productMap
+        logger.info("Product not found: " + name);
+        return 0; // Or throw an exception or handle the case as appropriate
+    }
+    public String updateProduct(int productId, String name, String description, double price, String category, String availability) {
         if (productMap.containsKey(productId)) {
             Product product = productMap.get(productId);
             product.setName(name);
@@ -94,6 +105,9 @@ public class AdminDashboard {
             product.setPrice(price);
             product.setCategory(category);
             product.setAvailability(availability);
+            return "Product updated successfully";
+        } else {
+            return "Product with ID " + productId + " not found";
         }
     }
 
@@ -137,6 +151,11 @@ public class AdminDashboard {
         }
     }
     public String  addAppointment(Appointment appointment) {
+        for (Appointment existingAppointment : appointments) {
+            if (hasTimeConflict(existingAppointment, appointment)) {
+                return "Error: Time conflict with an existing appointment.";
+            }
+        }
         appointments.add(appointment);
         return "Added successfully";
     }
@@ -155,6 +174,18 @@ public class AdminDashboard {
     public String deleteAppointment(int appointmentId) {
         appointments.removeIf(appointment -> appointment.appointmentId() == appointmentId);
         return "Deleted successfully";
+    }
+    // Function to check if there is a time conflict between two appointments
+    private static boolean hasTimeConflict(Appointment existingAppointment, Appointment newAppointment) {
+        String existingStartTime = existingAppointment.scheduledTime().split(" - ")[0];
+        String existingEndTime = existingAppointment.scheduledTime().split(" - ")[1];
+
+        String newStartTime = newAppointment.scheduledTime().split(" - ")[0];
+        String newEndTime = newAppointment.scheduledTime().split(" - ")[1];
+
+        return existingStartTime.equals(newStartTime) || existingEndTime.equals(newEndTime) ||
+                (existingStartTime.compareTo(newStartTime) < 0 && existingEndTime.compareTo(newStartTime) > 0) ||
+                (existingStartTime.compareTo(newEndTime) < 0 && existingEndTime.compareTo(newEndTime) > 0);
     }
 
 }

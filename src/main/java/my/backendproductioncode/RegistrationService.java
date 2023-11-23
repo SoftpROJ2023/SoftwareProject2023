@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class RegistrationService {
-    char name;
     private final Map<String, User> registeredUsers = new HashMap<>();
     private static final Logger logger = Logger.getLogger(RegistrationService.class.getName());
 
