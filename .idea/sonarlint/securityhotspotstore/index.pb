@@ -62,3 +62,9 @@ I
 cases/UserProfile.feature,1\c\1cbe8995e9702fa7856f7c4095a278717d437b5c
 i
 9src/test/java/DevelopmentDrivenSteps/UserProfileStep.java,8\5\8577d93ffa7c41b64193fe460b3f1275f37103a8
+R
+"cases/InstallationRequests.feature,c\8\c8b6df8f9e0c00f6b551c1ff4bd682f18ccc37f1
+v
+Fsrc/test/java/DevelopmentDrivenSteps/InstallationRequestsسفثح.java,4\d\4d6caa78ad1b0dc4e12d5fb8174262673bed4080
+r
+Bsrc/test/java/DevelopmentDrivenSteps/InstallationRequestsStep.java,3\f\3f2fa969c4ff84715ca51f0c83c0dec8b7da8b8a

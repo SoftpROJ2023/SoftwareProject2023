@@ -21,7 +21,10 @@ public class AdminDashboard {
         productMap.put(5, new Product(5, "Seat Covers", "It is Seat Covers", 150.0, interior, inStock));
         productMap.put(6, new Product(6, "Car Audio System", "It is Car Audio System", 150.0, interior, outOfStock));
     }
+
     private final List<Appointment> appointments;
+    private List<Appointment> storedAppointments;
+
     private static final String SCHEDULED = "Scheduled";
     private static final String UNSCHEDULED = "UnScheduled";
 
@@ -157,9 +160,17 @@ public class AdminDashboard {
             }
         }
         appointments.add(appointment);
+        storedAppointments = storeAppointment(appointment); // Update storedAppointments
         return "Added successfully";
     }
-
+    private List<Appointment> storeAppointment(Appointment appointment) {
+        // Add logic here to store the appointment in another array or perform other actions
+        storedAppointments.add(appointment);
+        return new ArrayList<>(storedAppointments); // Return a copy of storedAppointments
+    }
+    public List<Appointment> getStoredAppointments() {
+        return new ArrayList<>(storedAppointments); // Return a copy of storedAppointments
+    }
     public String updateAppointment(int appointmentId, Appointment updatedAppointment) {
         for (int i = 0; i < appointments.size(); i++) {
             if (appointments.get(i).appointmentId() == appointmentId) {

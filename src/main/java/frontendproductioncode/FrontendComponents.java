@@ -106,12 +106,17 @@ public class FrontendComponents {
                     purchaseProduct(scanner);
                     break;
                 case "7":
-                    seeAllOrders();
+                    viewAllInstallationAppointments();
+                    scheduleNewInstallationAppointment();
                     break;
                 case "8":
-                    editUserProfile(scanner);
+                    seeAllOrders();
+                    installationRequests();
                     break;
                 case "9":
+                    editUserProfile(scanner);
+                    break;
+                case "10":
                     logOut();
                     break;
                 default:
@@ -197,12 +202,13 @@ public class FrontendComponents {
         logger.log(Level.INFO, "1. See all categories");
         logger.log(Level.INFO, "2. Search for Product related to a specific category");
         logger.log(Level.INFO, "3. See all products");
-        logger.log(Level.INFO, "4. Search for a product");
-        logger.log(Level.INFO, "5. Filter products by availability");
+        logger.log(Level.INFO, "4. Search for a product by name");
+        logger.log(Level.INFO, "5. Filter products by availability (In Stock, Out Of Stock)");
         logger.log(Level.INFO, "6. Purchase a product");
-        logger.log(Level.INFO, "7. See all orders");
-        logger.log(Level.INFO, "8. Edit Your Profile");
-        logger.log(Level.INFO, "9. Log out");
+        logger.log(Level.INFO, "7. Installation requests.");
+        logger.log(Level.INFO, "8. View order history and installation requests");
+        logger.log(Level.INFO, "9. Edit Your Profile");
+        logger.log(Level.INFO, "10. Log out");
     }
 
     public void displayAdminDashboard(){
@@ -350,10 +356,12 @@ public class FrontendComponents {
     }
 
     private void seeAllOrders( ) {
-        logger.log(Level.INFO, "You selected 'See all orders'");
+        logger.log(Level.INFO, "You selected View order history and installation requests");
         purchase.printOrders();
     }
-
+    private void installationRequests( ) {
+        admin.getStoredAppointments();
+    }
     private void logOut( ) {
         logger.log(Level.INFO, "Logging out...");
         loggedIn = false;
@@ -456,7 +464,6 @@ public class FrontendComponents {
     }
 
     private void viewAllInstallationAppointments() {
-        logger.log(Level.INFO, "You chose to View all installation appointment");
         admin.logAppointments();
     }
 
