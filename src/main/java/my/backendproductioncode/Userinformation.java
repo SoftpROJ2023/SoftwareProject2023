@@ -1,6 +1,8 @@
 package my.backendproductioncode;
 
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Userinformation {
 
@@ -9,6 +11,8 @@ public class Userinformation {
     private String Email;
     private String Password;
     private String CPassword;
+    private List<InstallationRequest> orderHistory;
+    private UserProfile userProfile;
 
 
     public Userinformation(){}
@@ -17,6 +21,9 @@ public class Userinformation {
         this.Email=Email;
         this.Password=Password;
         this.CPassword=CPassword;
+        this.orderHistory = new ArrayList<>();
+        this.userProfile = new UserProfile(this);
+
     }
 
     public String getUsername() {
@@ -37,7 +44,9 @@ public class Userinformation {
     public String getPassword() {
         return username;
     }
-
+    public List<InstallationRequest> getOrderHistory() {
+        return orderHistory;
+    }
     public void setPassword(String password) {
         this.Password = password;
     }
@@ -55,5 +64,12 @@ public class Userinformation {
             return false;
         }
     }
+
+//    public void viewOrderHistory() {
+//        System.out.println("Order History for " + this.username + ":");
+//        for (InstallationRequest request : orderHistory) {
+//            System.out.println(request.getProduct().getName() + " - " + request.getPreferredDate());
+//        }
+//    }
 
 }
