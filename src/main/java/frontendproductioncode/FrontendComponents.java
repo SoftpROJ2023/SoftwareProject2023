@@ -2,6 +2,7 @@ package frontendproductioncode;
 
 import my.backendproductioncode.*;
 
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,8 @@ public class FrontendComponents {
     boolean loggedIn;
     boolean adminFlag = false;
     boolean userFlag = false;
+    boolean installerFlag = false;
+
     boolean isInUserDashboard=false;
     String message="Please Enter Your Choice:";
     //data for appointment
@@ -52,6 +55,9 @@ public class FrontendComponents {
                 handleUserDashboard();
             } else if (adminFlag) {
                 handleAdminDashboard();
+            }
+            else if(installerFlag){
+                handleInstallerPage();
             }
         }
     }
@@ -117,6 +123,9 @@ public class FrontendComponents {
                     editUserProfile(scanner);
                     break;
                 case "10":
+                    admin.printAppointments();
+                    break;
+                case "11":
                     logOut();
                     break;
                 default:
@@ -183,13 +192,37 @@ public class FrontendComponents {
                     logger.log(Level.INFO, "Exiting the Admin Dashboard. Goodbye!");
                     adminFlag = false;
                     loggedIn = false;
+                    installerFlag=false;
                     break;
                 default:
                     logger.log(Level.INFO, "Invalid choice. Please choose a valid option.");
             }
         }
     }
-
+    private void handleInstallerPage(){
+        displayInstallerDashboard();
+        Scanner scanner = new Scanner(System.in);
+        logger.info(message);
+        if (scanner.hasNextLine()) {
+            String choice = scanner.nextLine();
+            switch (choice) {
+                case "1":
+                    admin.storeAppointment();
+                    break;
+                case "2":
+                    updateAppointmentStatus(scanner);
+                    break;
+                case "0":
+                    logger.log(Level.INFO, "Exiting The Installer Dashboard. Goodbye!");
+                    adminFlag = false;
+                    loggedIn = false;
+                    installerFlag=false;
+                    break;
+                default:
+                    logger.log(Level.INFO, "Invalid choice. Please choose a valid option.");
+            }
+        }
+    }
     public void displayWelcomePage() {
         logger.log(Level.INFO, "Welcome to our application!");
         logger.log(Level.INFO, "1. Registration");
@@ -208,7 +241,8 @@ public class FrontendComponents {
         logger.log(Level.INFO, "7. Installation requests.");
         logger.log(Level.INFO, "8. View order history and installation requests");
         logger.log(Level.INFO, "9. Edit Your Profile");
-        logger.log(Level.INFO, "10. Log out");
+        logger.log(Level.INFO, "10. Notifications");
+        logger.log(Level.INFO, "11. Log out");
     }
 
     public void displayAdminDashboard(){
@@ -224,11 +258,16 @@ public class FrontendComponents {
         logger.log(Level.INFO, "13. Update an existing installation appointment 14. Cancel an existing installation appointment");
         logger.log(Level.INFO, "");
         logger.log(Level.INFO, "0. Exit");
-
+    }
+    public void displayInstallerDashboard() {
+        logger.log(Level.INFO, "Welcome to installer dashboard");
+        logger.log(Level.INFO, "1. Notifications: View installation requests");
+        logger.log(Level.INFO, "2. Schedule Appointments");
+        logger.log(Level.INFO, "0. Log out");
     }
     public void displayEnterYourValue(){
         logger.info(" ");
-        logger.info("Please enter what you want");
+        logger.info("Please enter your value");
         logger.info(" ");
     }
     public void register(){
@@ -261,7 +300,9 @@ public class FrontendComponents {
         if(loggedIn){
             if (username.equals("Admin")) {
                 adminFlag = true; // Set adminFlag to true if the username is "Admin"
-            }else {
+            } else if (username.equals("Installer")) {
+                installerFlag=true;
+            } else {
                 userFlag=true;
             }
         }
@@ -358,9 +399,15 @@ public class FrontendComponents {
     private void seeAllOrders( ) {
         logger.log(Level.INFO, "You selected View order history and installation requests");
         purchase.printOrders();
+        if (purchase.lengthOfOrders() <1){
+            logger.log(Level.INFO, "You have not made any purchases yet");
+        }
     }
     private void installationRequests( ) {
-        admin.getStoredAppointments();
+        admin.storeAppointment();
+        if (admin.lengthOfStoredAppointment() <1){
+            logger.log(Level.INFO, "You have not made any request yet");
+        }
     }
     private void logOut( ) {
         logger.log(Level.INFO, "Logging out...");
@@ -478,6 +525,24 @@ public class FrontendComponents {
         displayEnterYourValue();
         int idApp = scanner.nextInt();
         logger.info(admin.deleteAppointment(idApp));
+    }
+    private  void updateAppointmentStatus(Scanner scanner){
+        admin.logAppointments();
+        logger.info("Please select the appointment ID whose status you want to modify");
+        int idAppointment = scanner.nextInt();
+        if (idAppointment ==0){
+            return;
+        }
+        scanner.nextLine(); // Consume the newline character
+        Appointment appointments=admin.getAppointmentById(idAppointment);
+        logger.info("Please enter the new status for appointment");
+        String statusAppointment = scanner.nextLine();
+        boolean newStatus=admin.updateStatus(Collections.singletonList(appointments),idAppointment,statusAppointment);
+        if(newStatus){
+            logger.info("Your status adjustment request has been successfully accepted");
+        }else{
+            logger.info("The request to modify the status was rejected. Verify the data entered");
+        }
     }
 
 }

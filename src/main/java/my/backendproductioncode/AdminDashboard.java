@@ -23,16 +23,17 @@ public class AdminDashboard {
     }
 
     private final List<Appointment> appointments;
-    private List<Appointment> storedAppointments;
-
-    private static final String SCHEDULED = "Scheduled";
-    private static final String UNSCHEDULED = "UnScheduled";
+    private List<Appointment> storedAppointments = new ArrayList<>(); // Initialize storedAppointments
+    List<Appointment> modifiableAppointments= new ArrayList<>();
+    private static final String ACCEPTED = "Accepted";
+    private static final String REJECTED = "Rejected";
+    private static final String STILL_WAITING = "Waiting";
 
     public AdminDashboard() {
         this.appointments = new ArrayList<>();
-        appointments.add(new Appointment(1, "Alice Smith", "Product A", "2023-10-25", "10:00 AM - 12:00 PM", SCHEDULED));
-        appointments.add(new Appointment(2, "Bob Johnson", "Product B", "2023-10-26", "02:00 PM - 04:00 PM", UNSCHEDULED));
-        appointments.add(new Appointment(3, "Charlie Brown", "Product C", "2023-10-27", "09:00 AM - 11:00 AM", SCHEDULED));
+        appointments.add(new Appointment(1, "Alice Smith", "Product A", "2023-10-25", "10:00 AM - 12:00 PM", REJECTED));
+        appointments.add(new Appointment(2, "Bob Johnson", "Product B", "2023-10-26", "02:00 PM - 04:00 PM", ACCEPTED));
+        appointments.add(new Appointment(3, "Charlie Brown", "Product C", "2023-10-27", "09:00 AM - 11:00 AM", STILL_WAITING));
     }
 
     public void addProductCategory(String category) {
@@ -131,27 +132,41 @@ public class AdminDashboard {
     }
 
     public boolean logAppointments() {
+        ArrayList<Integer> myArrayList = new ArrayList<>();
         try {
-            for (Appointment appointment : appointments) {
+            for (Appointment appointment : modifiableAppointments) {
                 int appointmentId = appointment.appointmentId();
-                String customerName = appointment.customerName();
-                String product = appointment.product();
-                String scheduledDate = appointment.scheduledDate();
-                String scheduledTime = appointment.scheduledTime();
-                String status = appointment.status();
-
-                logger.info("Appointment ID: " + appointmentId +
-                        ", Customer Name: " + customerName +
-                        ", Product: " + product +
-                        ", Scheduled Date: " + scheduledDate +
-                        ", Scheduled Time: " + scheduledTime +
-                        ", Status: " + status);
+                myArrayList.add(appointmentId);
+                printAppointmentData(appointment);
+            }
+            for (Appointment lastAppointment : appointments) {
+                int appointmentId = lastAppointment.appointmentId();
+                if (myArrayList.contains(appointmentId)) {
+                    continue;
+                }
+                printAppointmentData(lastAppointment);
             }
             return true; // Logging was successful
         } catch (Exception e) {
             logger.severe("Error logging appointments: " + e.getMessage());
             return false; // Logging encountered an error
         }
+
+    }
+    public void printAppointmentData(Appointment appointment){
+        int appointmentId = appointment.appointmentId();
+        String customerName = appointment.customerName();
+        String product = appointment.product();
+        String scheduledDate = appointment.scheduledDate();
+        String scheduledTime = appointment.scheduledTime();
+        String status = appointment.status();
+
+        logger.info("Appointment ID: " + appointmentId +
+                ", Customer Name: " + customerName +
+                ", Product: " + product +
+                ", Scheduled Date: " + scheduledDate +
+                ", Scheduled Time: " + scheduledTime +
+                ", Status: " + status);
     }
     public String  addAppointment(Appointment appointment) {
         for (Appointment existingAppointment : appointments) {
@@ -164,12 +179,51 @@ public class AdminDashboard {
         return "Added successfully";
     }
     private List<Appointment> storeAppointment(Appointment appointment) {
-        // Add logic here to store the appointment in another array or perform other actions
         storedAppointments.add(appointment);
         return new ArrayList<>(storedAppointments); // Return a copy of storedAppointments
     }
-    public List<Appointment> getStoredAppointments() {
-        return new ArrayList<>(storedAppointments); // Return a copy of storedAppointments
+    public void storeAppointment() {
+        for (Appointment storedAppointment : storedAppointments) {
+            logger.info(storedAppointment.toString());
+        }
+    }
+    public Appointment getAppointmentById(int id) {
+        for (Appointment appointment : appointments) {
+            if (appointment.appointmentId() == id) {
+                return appointment;
+            }
+        }
+        return null; // Return null if no appointment with the specified ID is found
+    }
+
+
+    public boolean updateStatus(List<Appointment> appointments, int appointmentId, String newStatus) {
+        modifiableAppointments = new ArrayList<>(appointments);
+        List<Appointment> updatedAppointments = new ArrayList<>();
+        boolean isUpdated = false;
+        for (Appointment appointment : modifiableAppointments) {
+            if (appointment.appointmentId() == appointmentId) {
+                updatedAppointments.add(new Appointment(
+                        appointment.appointmentId(),
+                        appointment.customerName(),
+                        appointment.product(),
+                        appointment.scheduledDate(),
+                        appointment.scheduledTime(),
+                        newStatus
+                ));
+                isUpdated = true;
+            } else {
+                updatedAppointments.add(appointment);
+            }
+        }
+        if (isUpdated) {
+            modifiableAppointments.clear();
+            modifiableAppointments.addAll(updatedAppointments);
+        }
+        return isUpdated;
+    }
+    public int lengthOfStoredAppointment(){
+        return  storedAppointments.size();
     }
     public String updateAppointment(int appointmentId, Appointment updatedAppointment) {
         for (int i = 0; i < appointments.size(); i++) {
@@ -199,4 +253,14 @@ public class AdminDashboard {
                 (existingStartTime.compareTo(newEndTime) < 0 && existingEndTime.compareTo(newEndTime) > 0);
     }
 
+    public  void printAppointments() {
+        for (Appointment appointment : modifiableAppointments) {
+            if(appointment.status().equals(REJECTED)){
+                logger.info("Your reservation has been declined");
+            }
+            if (appointment.status().equals(ACCEPTED)){
+                logger.info("Your reservation has been accepted");
+            }
+        }
+    }
 }
