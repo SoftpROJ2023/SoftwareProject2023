@@ -68,3 +68,5 @@ r
 Bsrc/test/java/DevelopmentDrivenSteps/InstallationRequestsStep.java,3\f\3f2fa969c4ff84715ca51f0c83c0dec8b7da8b8a
 K
 cases/Notifications.feature,b\b\bb83bcd91ed8efd6ae76d196f01a8266f04735a0
+k
+;src/test/java/DevelopmentDrivenSteps/NotificationsStep.java,9\c\9c474f68ee44961ed6d63d770215876efd985c2b
