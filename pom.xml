@@ -99,6 +99,6 @@
         <maven.compiler.target>18</maven.compiler.target>
 	<sonar.organization>softproj2023</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-	<sonar.coverage.exclusions>path/to/Main.java</sonar.coverage.exclusions>
+    	<sonar.coverage.exclusions>src/main/java/path/to/Main.java</sonar.coverage.exclusions>
     </properties>
 </project>
