@@ -1,17 +1,17 @@
-Feature: Sign-In Functionality
+Feature: User Sign In
 
-  Scenario: User successfully signs in
-    Given the user is on the sign-in page
-    When the user provides the following details for sign-in:
-      | username | password  |
-      | User2    | password2 |
-    Then the user should be successfully signed in
+  Scenario: Successful Sign In
+    Given a registered user with username "john_doe" and password "P@ssw0rd"
+    When the user attempts to sign in with username "john_doe" and correct password "P@ssw0rd"
+    Then the sign-in should be successful
 
-  Scenario: User enters an invalid username and password
-    Given the user is on the sign-in page
-    When the user provides the following details for sign-in:
-      | username | password |
-      | John     | invalid  |
-    Then the user should see an error message
+  Scenario: Invalid Password
+    Given a registered user with username "jane_smith" and password "Secure123"
+    When the user attempts to sign in with username "jane_smith" and incorrect password "WrongPassword"
+    Then the sign-in should fail with an invalid password message
 
+  Scenario: User Not Found
+    Given no registered user with username "nonexistent_user"
+    When the user attempts to sign in with username "nonexistent_user" and any password
+    Then the sign-in should fail with a user not found message
 
