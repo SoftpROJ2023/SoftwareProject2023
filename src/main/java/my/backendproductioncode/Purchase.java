@@ -29,16 +29,11 @@ public class Purchase {
         }
     }
     public  boolean printOrders() {
-        try {
             logger.info("Purchased products");
             for (Product product : order) {
                 logger.info("-" + product.getName());
             }
             return true;
-        } catch (Exception e) {
-            logger.severe("Error while logging cart contents: " + e.getMessage());
-            return false;
-        }
     }
     public int lengthOfOrders(){
         return  order.size();
