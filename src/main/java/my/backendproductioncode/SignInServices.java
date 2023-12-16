@@ -27,7 +27,6 @@ public class SignInServices {
     public boolean signInUser(RegistrationService myReg, String username, String password) {
         // Step 1: Get the Map of registered users from myReg
         Map<String, User> registeredUsers = myReg.getRegisteredUsers();
-
         // Step 2: Check if the provided username exists in the Map
         if (registeredUsers.containsKey(username)) {
             User user = registeredUsers.get(username);
@@ -36,14 +35,18 @@ public class SignInServices {
                 // Username and password are valid for sign-in
                 logger.info("Sign-in successful for user: " + username);
                 return true;
+            } else {
+                // Incorrect password
+                logger.info("Incorrect password for user: " + username);
+            }
+        } else {
+            // If the username is not found in the Map of registered users
+            logger.info("User not found: " + username);
+        }
+        return false; // Sign-in was not successful
             } 
         } 
-    }
-
-
-}
-
-
+    
 
 
 
