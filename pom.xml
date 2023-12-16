@@ -48,7 +48,7 @@
 		<version>1.7.36</version>
 	</dependency>
 
-	<plugin>
+	<dependency>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     
@@ -71,7 +71,7 @@
                             </goals>
                         </execution>
                     </executions>
-                </plugin>
+                </dependency>
 </dependencies>
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
