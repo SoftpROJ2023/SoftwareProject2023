@@ -33,15 +33,15 @@ public class SignInServices {
             // Step 3: Check if the provided password matches the user's password
             if (user.password().equals(password)) {
                 // Username and password are valid for sign-in
-                logger.info("Password is valid. User can be signed in.");
+                logger.info("Sign-in successful for user: " + username);    
                 return true;
             } else {
                 // Incorrect password
-                logger.info("Invalid password. User cannot be signed in.");
+                     logger.info("Incorrect password for user: " + username);
             }
         } else {
             // If the username is not found in the Map of registered users
-            logger.info("User not found. User cannot be signed in.");
+                    logger.info("User not found: " + username);
         }
         return false; // Sign-in was not successful
             } 
