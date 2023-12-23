@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 public class FrontendComponents {
     private static final Logger logger = Logger.getLogger(FrontendComponents.class.getName());
+
     private static int id;
     private static String name;
     private static String description;
@@ -475,11 +475,12 @@ public class FrontendComponents {
         if (returnProduct == 0) {
             logger.info("Product not found: " + productNameForEdit);
             return;
-        }else{
+        }
             logger.info("The product whose information you want to modify already exists and This is the ID of the product should be enter in Id " + returnProduct);
             readInputFromUser();
-            logger.info(admin.updateProduct(id, name, description, price, category, availability));
-        }
+            String resultUpdated=admin.updateProduct(id, name, description, price, category, availability);
+            logger.info(resultUpdated);
+
 
 
     }
