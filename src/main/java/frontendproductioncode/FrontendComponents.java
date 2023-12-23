@@ -522,7 +522,8 @@ public class FrontendComponents {
         displayEnterYourValue();
         int idApp = scanner.nextInt();
         appointment = readInputForAppointment();
-        logger.info(admin.updateAppointment(idApp, appointment));
+        String resultUpdatedAppointment=admin.updateAppointment(idApp, appointment);
+        logger.info(resultUpdatedAppointment);
     }
 
     private void cancelExistingInstallationAppointment(Scanner scanner) {
