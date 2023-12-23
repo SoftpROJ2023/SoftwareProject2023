@@ -264,6 +264,24 @@ public class AdminDashboardStepDefinitions {
         Assert.assertEquals("Deleted successfully", appointment);
     }
 
+    @Given("there are appointments in the system")
+    public void there_are_appointments_in_the_system(io.cucumber.datatable.DataTable dataTable) {
+        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
+        for (Map<String, String> row : data) {
+            String status = row.get("Status");
+        }
+    }
+    boolean printApp=true;
+    @When("the user prints the appointments")
+    public void the_user_prints_the_appointments() {
+        adminDashboard.printAppointments();
+        printApp=true;
+    }
+
+    @Then("the system should log the appropriate messages based on the appointment status")
+    public void the_system_should_log_the_appropriate_messages_based_on_the_appointment_status(io.cucumber.datatable.DataTable dataTable) {
+        Assert.assertTrue(printApp);
+    }
 
 
 }

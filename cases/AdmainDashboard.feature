@@ -85,3 +85,16 @@ Feature: Admin Dashboard - Manage Product Categories
     When I enter a "2" followed by the appointment ID in the console
     Then The appointment should be removed from the list of installation appointments
 
+  Scenario: Printing appointment status
+    Given there are appointments in the system
+      | Status    |
+      | ACCEPTED  |
+      | REJECTED  |
+      | PENDING   |
+    When the user prints the appointments
+    Then the system should log the appropriate messages based on the appointment status
+      | Status    | Expected Message                              |
+      | ACCEPTED  | Your reservation has been accepted           |
+      | REJECTED  | Your reservation has been declined           |
+      | PENDING   | (no log message expected for pending status) |
+
