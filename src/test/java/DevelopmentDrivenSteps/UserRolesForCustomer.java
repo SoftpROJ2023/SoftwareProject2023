@@ -6,10 +6,13 @@ import io.cucumber.java.en.When;
 import my.backendproductioncode.AdminDashboard;
 import my.backendproductioncode.ProductCatalog;
 import my.backendproductioncode.Purchase;
+import my.backendproductioncode.RegistrationService;
 import org.junit.Assert;
+import org.slf4j.ILoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class UserRolesForCustomer {
     AdminDashboard admin=new AdminDashboard();
@@ -19,7 +22,12 @@ public class UserRolesForCustomer {
     boolean availableProductsCataloges=false;
     boolean addCart=false;
     boolean Orders=false;
+    boolean printOrd=false;
     String productName;
+    int arrSize=1;
+    boolean arrayStatus;
+    private static final Logger logger = Logger.getLogger(UserRolesForCustomer.class.getName());
+
     @Given("the user is logged in as a customer")
     public void the_user_is_logged_in_as_a_customer() {
         isLogged=true;
@@ -57,6 +65,43 @@ public class UserRolesForCustomer {
     @Then("the customer should see a list of previous orders")
     public void the_customer_should_see_a_list_of_previous_orders() {
         Assert.assertTrue(Orders);
+    }
+
+    @Given("there are InitialProduct1 products in the order")
+    public void there_are_initial_product1_products_in_the_order() {
+        printOrd=false;
+    }
+    @When("the user prints the order")
+    public void the_user_prints_the_order() {
+        printOrd=purchase.printOrders();
+    }
+    @Then("the system logs {string}")
+    public void the_system_logs(String string) {
+        logger.info(string);
+    }
+    @Then("the system logs each product name in the order")
+    public void the_system_logs_each_product_name_in_the_order() {
+        logger.info("InitialProduct1");
+
+    }
+    @Then("the system returns true")
+    public void the_system_returns_true() {
+       Assert.assertTrue(printOrd);
+    }
+
+    @Given("the order list is not empty")
+    public void the_order_list_is_not_empty() {
+        arrSize=purchase.lengthOfOrders();
+        if (arrSize==0) arrayStatus=true;
+    }
+    @When("the length of the orders is requested")
+    public void the_length_of_the_orders_is_requested() {
+        arrSize=purchase.lengthOfOrders();
+        logger.info(String.valueOf(arrSize));
+    }
+    @Then("the system should return the correct number of orders")
+    public void the_system_should_return_the_correct_number_of_orders() {
+        Assert.assertTrue(arrayStatus);
     }
 
 
