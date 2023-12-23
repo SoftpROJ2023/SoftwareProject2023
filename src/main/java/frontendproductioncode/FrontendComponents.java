@@ -475,11 +475,12 @@ public class FrontendComponents {
         if (returnProduct == 0) {
             logger.info("Product not found: " + productNameForEdit);
             return;
-        }
-        logger.info("The product whose information you want to modify already exists and This is the ID of the product should be enter in Id " + returnProduct);
-
-        readInputFromUser();
+        }else{
+            logger.info("The product whose information you want to modify already exists and This is the ID of the product should be enter in Id " + returnProduct);
+            readInputFromUser();
             logger.info(admin.updateProduct(id, name, description, price, category, availability));
+        }
+
 
     }
 
