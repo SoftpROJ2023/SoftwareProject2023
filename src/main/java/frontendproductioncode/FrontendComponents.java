@@ -477,8 +477,10 @@ public class FrontendComponents {
             return;
         }
         logger.info("The product whose information you want to modify already exists and This is the ID of the product should be enter in Id " + returnProduct);
+
         readInputFromUser();
-        logger.info(admin.updateProduct(id, name, description, price, category, availability));
+            logger.info(admin.updateProduct(id, name, description, price, category, availability));
+
     }
 
     private void viewCustomerAccounts() {

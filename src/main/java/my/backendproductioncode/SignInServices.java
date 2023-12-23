@@ -34,15 +34,19 @@ public class SignInServices {
             // Step 3: Check if the provided password matches the user's password
             if (user.password().equals(password)) {
                 // Username and password are valid for sign-in
-                logger.info("Sign-in successful for user: " + username);
+                String concatenatedUsername = "Sign-in successful for user:  " + username;
+                logger.info(concatenatedUsername);
                 return true;
             } else {
                 // Incorrect password
-                logger.info("Incorrect password for user: " + username);
+                String concatenatedUsername = "Incorrect password for user:  " + username;
+                logger.info(concatenatedUsername);
             }
         } else {
             // If the username is not found in the Map of registered users
-            logger.info("User not found: " + username);
+            String concatenatedUsername = "User not found:  " + username;
+            logger.info(concatenatedUsername);
+
         }
         return false; // Sign-in was not successful
     }
