@@ -18,15 +18,11 @@ public class Purchase {
         cart.add(initialProduct2);
     }
     public boolean addProductToCart(Product product) {
-        if (product.getAvailability().equals("In Stock")) {
             logger.info("Your purchase was completed successfully");
             cart.add(product);
             order.add(product);
             return true; // Product added to cart successfully
-        } else {
-            logger.info("The purchase failed");
-            return false; // Product is not in stock
-        }
+
     }
     public  boolean printOrders() {
         try {
