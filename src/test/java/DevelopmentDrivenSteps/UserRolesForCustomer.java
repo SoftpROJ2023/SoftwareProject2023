@@ -3,13 +3,11 @@ package DevelopmentDrivenSteps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import my.backendproductioncode.AdminDashboard;
-import my.backendproductioncode.ProductCatalog;
-import my.backendproductioncode.Purchase;
-import my.backendproductioncode.RegistrationService;
+import my.backendproductioncode.*;
 import org.junit.Assert;
 import org.slf4j.ILoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -105,4 +103,19 @@ public class UserRolesForCustomer {
     }
 
 
+    @Given("an order with products")
+    public void an_order_with_products() {
+        purchase = new Purchase();
+
+    }
+    @When("the order is processed")
+    public void the_order_is_processed() {
+        Product newProduct = new Product(3, "NewProduct", "Description 3", 20.0, "Category3", "In Stock");
+        purchase.addProductToCart(newProduct);
+    }
+    @Then("the product names should be logged")
+    public void the_product_names_should_be_logged() {
+        boolean result = purchase.printOrders();
+        Assert.assertEquals(true, result);
+    }
 }

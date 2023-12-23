@@ -27,3 +27,8 @@ Feature: Customer role functionality
     Given the order list is not empty
     When the length of the orders is requested
     Then the system should return the correct number of orders
+
+  Scenario: Log product names in an order
+    Given an order with products
+    When the order is processed
+    Then the product names should be logged
