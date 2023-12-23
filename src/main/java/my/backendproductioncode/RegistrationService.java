@@ -50,7 +50,8 @@ public class RegistrationService {
         for (Map.Entry<String, User> entry : registeredUsers.entrySet()) {
             String username = entry.getKey();
             User user = entry.getValue();
-            logger.info("Username: " + username);
+            String concatenatedUsername = "Username " + username;
+            logger.info(concatenatedUsername);
             logger.info("Email: " + user.email());
         }
     }
@@ -59,7 +60,8 @@ public class RegistrationService {
             String username = entry.getKey();
             User user = entry.getValue();
             if (username.equals(targetUsername)) {
-                logger.info("Username: " + username);
+                String concatenatedUsername = "Username " + username;
+                logger.info(concatenatedUsername);
                 logger.info("Email: " + user.email());
                 logger.info("Password: " + user.password());
                 return true;
