@@ -122,11 +122,11 @@ public class AdminDashboard {
     public boolean isProductUpdated(int productId, String name,String description, double price, String category, String availability) {
         if (productMap.containsKey(productId)) {
             Product product = productMap.get(productId);
-            return product.getName().equals(name)
-                    &&product.getDescription().equals(description)
+            return Objects.equals(product.getName(), name)
+                    && Objects.equals(product.getDescription(), description)
                     && product.getPrice() == price
-                    && product.getCategory().equals(category)
-                    && product.getAvailability().equals(availability);
+                    && Objects.equals(product.getCategory(), category)
+                    && Objects.equals(product.getAvailability(), availability);
         }
         return false;
     }
