@@ -24,7 +24,6 @@ public class AdminDashboard {
 
     private final List<Appointment> appointments;
     private List<Appointment> storedAppointments = new ArrayList<>(); // Initialize storedAppointments
-    List<Appointment> modifiableAppointments= new ArrayList<>();
     private static final String ACCEPTED = "Accepted";
     private static final String REJECTED = "Rejected";
     private static final String STILL_WAITING = "Waiting";
@@ -35,7 +34,9 @@ public class AdminDashboard {
         appointments.add(new Appointment(2, "Bob Johnson", "Product B", "2023-10-26", "02:00 PM - 04:00 PM", ACCEPTED));
         appointments.add(new Appointment(3, "Charlie Brown", "Product C", "2023-10-27", "09:00 AM - 11:00 AM", STILL_WAITING));
     }
-
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
     public void addProductCategory(String category) {
         productCategories.add(category);
         String message = "Product Category " + category + " Added Successfully";
@@ -121,49 +122,13 @@ public class AdminDashboard {
 
     public boolean isProductUpdated(int productId) {
         if (productMap.containsKey(productId)) {
-            Product product = productMap.get(productId);
             return true;
         }
         return false;
     }
 
-    public boolean logAppointments() {
-        ArrayList<Integer> myArrayList = new ArrayList<>();
-        try {
-            for (Appointment appointment : modifiableAppointments) {
-                int appointmentId = appointment.appointmentId();
-                myArrayList.add(appointmentId);
-                printAppointmentData(appointment);
-            }
-            for (Appointment lastAppointment : appointments) {
-                int appointmentId = lastAppointment.appointmentId();
-                if (myArrayList.contains(appointmentId)) {
-                    continue;
-                }
-                printAppointmentData(lastAppointment);
-            }
-            return true; // Logging was successful
-        } catch (Exception e) {
-            logger.severe("Error logging appointments: " + e.getMessage());
-            return false; // Logging encountered an error
-        }
 
-    }
-    public void printAppointmentData(Appointment appointment){
-        int appointmentId = appointment.appointmentId();
-        String customerName = appointment.customerName();
-        String product = appointment.product();
-        String scheduledDate = appointment.scheduledDate();
-        String scheduledTime = appointment.scheduledTime();
-        String status = appointment.status();
-        String result="Appointment ID: " + appointmentId +
-                ", Customer Name: " + customerName +
-                ", Product: " + product +
-                ", Scheduled Date: " + scheduledDate +
-                ", Scheduled Time: " + scheduledTime +
-                ", Status: " + status;
-        logger.info(result);
-    }
+
     public String  addAppointment(Appointment appointment) {
         for (Appointment existingAppointment : appointments) {
             if (hasTimeConflict(existingAppointment, appointment)) {
@@ -193,31 +158,6 @@ public class AdminDashboard {
     }
     @SuppressWarnings("all")
 
-    public boolean updateStatus(List<Appointment> appointments, int appointmentId, String newStatus) {
-        modifiableAppointments = new ArrayList<>(appointments);
-        List<Appointment> updatedAppointments = new ArrayList<>();
-        boolean isUpdated = false;
-        for (Appointment appointment : modifiableAppointments) {
-            if (appointment.appointmentId() == appointmentId) {
-                updatedAppointments.add(new Appointment(
-                        appointment.appointmentId(),
-                        appointment.customerName(),
-                        appointment.product(),
-                        appointment.scheduledDate(),
-                        appointment.scheduledTime(),
-                        newStatus
-                ));
-                isUpdated = true;
-            } else {
-                updatedAppointments.add(appointment);
-            }
-        }
-        if (isUpdated) {
-            modifiableAppointments.clear();
-            modifiableAppointments.addAll(updatedAppointments);
-        }
-        return isUpdated;
-    }
     public int lengthOfStoredAppointment(){
         return  storedAppointments.size();
     }
@@ -248,15 +188,5 @@ public class AdminDashboard {
                 (existingStartTime.compareTo(newStartTime) < 0 && existingEndTime.compareTo(newStartTime) > 0) ||
                 (existingStartTime.compareTo(newEndTime) < 0 && existingEndTime.compareTo(newEndTime) > 0);
     }
-    @SuppressWarnings("all")
-    public  void printAppointments() {
-        for (Appointment appointment : modifiableAppointments) {
-            if(appointment.status().equals(REJECTED)){
-                logger.info("Your reservation has been declined");
-            }
-            if (appointment.status().equals(ACCEPTED)){
-                logger.info("Your reservation has been accepted");
-            }
-        }
-    }
+
 }

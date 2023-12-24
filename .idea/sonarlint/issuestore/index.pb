@@ -70,3 +70,7 @@ K
 cases/Notifications.feature,b\b\bb83bcd91ed8efd6ae76d196f01a8266f04735a0
 k
 ;src/test/java/DevelopmentDrivenSteps/NotificationsStep.java,9\c\9c474f68ee44961ed6d63d770215876efd985c2b
+k
+;src/main/java/my/backendproductioncode/helperFunctions.java,1\9\199b1711f651335d51698d2faef14e99aa298180
+k
+;src/main/java/my/backendproductioncode/HelperFunctions.java,3\8\383f08f13826de5c641bd3b7f6d646fbd78fd0e1

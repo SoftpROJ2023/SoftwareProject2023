@@ -5,12 +5,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import my.backendproductioncode.AdminDashboard;
 import my.backendproductioncode.Appointment;
+import my.backendproductioncode.HelperFunctions;
 import org.junit.Assert;
 
 import java.util.List;
 
 public class UserRolesForInstaller {
     AdminDashboard admin=new AdminDashboard();
+    HelperFunctions helperFunctions=new HelperFunctions(admin);
     boolean isAccessList=false;
     boolean isLogged=false;
     public String appointment;
@@ -22,7 +24,7 @@ public class UserRolesForInstaller {
 
     @When("the installer accesses the installation request list")
     public void the_installer_accesses_the_installation_request_list() {
-                isAccessList=admin.logAppointments();
+                isAccessList=helperFunctions.logAppointments();
     }
 
     @Then("the installer should be able to view a list of pending installations")
