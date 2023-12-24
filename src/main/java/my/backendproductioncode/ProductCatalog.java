@@ -94,7 +94,6 @@ public class ProductCatalog {
             }
             return true; // Products in stock were found
         } else {
-            logger.warning("No products are currently in stock.");
             return false; // No products in stock were found
         }
     }
