@@ -9,6 +9,7 @@ import my.backendproductioncode.Appointment;
 import my.backendproductioncode.RegistrationService;
 import org.junit.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -268,26 +269,22 @@ public class AdminDashboardStepDefinitions {
         Assert.assertEquals("Deleted successfully", appointment);
     }
 
-    @Given("there are appointments in the system")
-    public void there_are_appointments_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> row : data) {
-            String status = row.get("Status");
-        }
-    }
-    boolean printApp=true;
-    @When("the user prints the appointments")
-    public void the_user_prints_the_appointments() {
-        adminDashboard.printAppointments();
-        printApp=true;
-    }
-
-    @Then("the system should log the appropriate messages based on the appointment status")
-    public void the_system_should_log_the_appropriate_messages_based_on_the_appointment_status(io.cucumber.datatable.DataTable dataTable) {
-        Assert.assertTrue(printApp);
-    }
 
 
+    boolean printCategories;
+    @Given("the product categories are loaded")
+    public void the_product_categories_are_loaded() {
+        printCategories=false;
+    }
+    @When("the printProductCategories method is called")
+    public void the_print_product_categories_method_is_called() {
+        adminDashboard.printProductCategories();
+        printCategories=true;
+    }
+    @Then("the product categories should be logged")
+    public void the_product_categories_should_be_logged() {
+            Assert.assertTrue(printCategories);
+    }
 }
 
 
