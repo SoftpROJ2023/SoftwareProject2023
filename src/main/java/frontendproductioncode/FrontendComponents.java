@@ -18,6 +18,7 @@ public class FrontendComponents {
     RegistrationService registrationService;
     SignInServices signInService;
     AdminDashboard admin;
+    HelperFunctions helperFunctions;
     ProductCatalog productCatalogs;
     Purchase purchase;
     Appointment appointment;
@@ -42,6 +43,7 @@ public class FrontendComponents {
         signInService = new SignInServices();
         admin=new AdminDashboard();
         productCatalogs=new ProductCatalog(admin);
+        helperFunctions=new HelperFunctions(admin);
         purchase=new Purchase();
     }
 
@@ -123,7 +125,7 @@ public class FrontendComponents {
                     editUserProfile(scanner);
                     break;
                 case "10":
-                    admin.printAppointments();
+                    helperFunctions.printAppointments();
                     break;
                 case "11":
                     logOut();
@@ -248,15 +250,10 @@ public class FrontendComponents {
     public void displayAdminDashboard(){
         logger.log(Level.INFO, "Welcome to Admin dashboard");
         logger.log(Level.INFO, "1. See all Categories  2. Add a new catalog 3. Edit an existing product category");
-        logger.log(Level.INFO, "");
         logger.log(Level.INFO, "4. Delete an existing product category 5.See all product listing 6. Add a product listing ");
-        logger.log(Level.INFO, "");
         logger.log(Level.INFO, "7. Update a product listing 8. View customer accounts 9. Search for a specific customer account");
-        logger.log(Level.INFO, "");
         logger.log(Level.INFO, "10. Delete a customer account 11. Add a new customer account 12. Schedule a new installation appointment");
-        logger.log(Level.INFO, "");
-        logger.log(Level.INFO, "13. Update an existing installation appointment 14. Cancel an existing installation appointment");
-        logger.log(Level.INFO, "");
+        logger.log(Level.INFO, "13. View All installation appointments 14. Update an existing installation appointment 15. Cancel an existing installation appointment");
         logger.log(Level.INFO, "0. Exit");
     }
     public void displayInstallerDashboard() {
@@ -515,7 +512,7 @@ public class FrontendComponents {
     }
 
     private void viewAllInstallationAppointments() {
-        admin.logAppointments();
+        helperFunctions.logAppointments();
     }
 
     private void updateExistingInstallationAppointment(Scanner scanner) {
@@ -532,7 +529,7 @@ public class FrontendComponents {
         logger.info(admin.deleteAppointment(idApp));
     }
     private  void updateAppointmentStatus(Scanner scanner){
-        admin.logAppointments();
+        helperFunctions.logAppointments();
         logger.info("Please select the appointment ID whose status you want to modify");
         int idAppointment = scanner.nextInt();
         if (idAppointment ==0){
@@ -542,7 +539,7 @@ public class FrontendComponents {
         Appointment appointments=admin.getAppointmentById(idAppointment);
         logger.info("Please enter the new status for appointment");
         String statusAppointment = scanner.nextLine();
-        boolean newStatus=admin.updateStatus(Collections.singletonList(appointments),idAppointment,statusAppointment);
+        boolean newStatus=helperFunctions.updateStatus(Collections.singletonList(appointments),idAppointment,statusAppointment);
         if(newStatus){
             logger.info("Your status adjustment request has been successfully accepted");
         }else{
