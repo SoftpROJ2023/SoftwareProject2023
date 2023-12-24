@@ -152,7 +152,11 @@ public class AdminDashboardStepDefinitions {
     @When("I enter the username {string}")
     public void i_enter_the_username(String string) {
         printUserData=registrationService.printRegisteredUser(string);
-        System.out.println(printUserData);
+        if(printUserData){
+            System.out.println(printUserData);
+        }else {
+            System.out.println(printUserData);
+        }
     }
 
     @Then("I should see the details of the customer's account")
