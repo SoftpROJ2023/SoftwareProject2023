@@ -5,9 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import my.backendproductioncode.*;
 import org.junit.Assert;
-import org.slf4j.ILoggerFactory;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;

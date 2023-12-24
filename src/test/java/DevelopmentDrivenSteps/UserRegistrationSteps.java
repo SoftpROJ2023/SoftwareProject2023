@@ -13,7 +13,8 @@ import java.util.Map;
 public  class UserRegistrationSteps {
     boolean inRegPage=false;
     String registrationResult;
-
+    RegistrationService registrationService;
+    String delResult;
     @Given("the user is on the registration page")
     public void theUserIsOnTheRegistrationPage() {
         inRegPage=true;
@@ -51,5 +52,34 @@ public  class UserRegistrationSteps {
         // Use the assert() method to verify the registration result
         Assert.assertEquals("Invalid email address", registrationResult);
     }
+    @Then("the user should see an error message indicating the username is already taken")
+    public void the_user_should_see_an_error_message_indicating_the_username_is_already_taken() {
+        Assert.assertEquals("Username already exists", registrationResult);
+    }
+
+
+    Boolean deletionResult;
+    @Given("the user with username exists")
+    public void the_user_with_username_exists() {
+        registrationService = new RegistrationService();
+    }
+    @When("the admin deletes the user with username {string}")
+    public void the_admin_deletes_the_user_with_username(String string) {
+        deletionResult= registrationService.deleteUser(string);
+        if(deletionResult){
+            delResult="User Deleted Successfully";
+        }else {
+            delResult="User not found for deletion";
+        }
+    }
+    @Then("the user with username should be deleted successfully")
+    public void the_user_with_username_should_be_deleted_successfully() {
+        if(deletionResult){
+            Assert.assertEquals("User Deleted Successfully",delResult);
+        }else {
+            Assert.assertEquals("User not found for deletion",delResult);
+        }
+    }
+
 
 }
