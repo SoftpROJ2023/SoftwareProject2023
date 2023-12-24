@@ -160,13 +160,13 @@ public class AdminDashboard {
         String scheduledDate = appointment.scheduledDate();
         String scheduledTime = appointment.scheduledTime();
         String status = appointment.status();
-
-        logger.info("Appointment ID: " + appointmentId +
+        String result="Appointment ID: " + appointmentId +
                 ", Customer Name: " + customerName +
                 ", Product: " + product +
                 ", Scheduled Date: " + scheduledDate +
                 ", Scheduled Time: " + scheduledTime +
-                ", Status: " + status);
+                ", Status: " + status;
+        logger.info(result);
     }
     public String  addAppointment(Appointment appointment) {
         for (Appointment existingAppointment : appointments) {
@@ -195,7 +195,7 @@ public class AdminDashboard {
         }
         return null; // Return null if no appointment with the specified ID is found
     }
-
+    @SuppressWarnings("all")
 
     public boolean updateStatus(List<Appointment> appointments, int appointmentId, String newStatus) {
         modifiableAppointments = new ArrayList<>(appointments);
@@ -252,7 +252,7 @@ public class AdminDashboard {
                 (existingStartTime.compareTo(newStartTime) < 0 && existingEndTime.compareTo(newStartTime) > 0) ||
                 (existingStartTime.compareTo(newEndTime) < 0 && existingEndTime.compareTo(newEndTime) > 0);
     }
-
+    @SuppressWarnings("all")
     public  void printAppointments() {
         for (Appointment appointment : modifiableAppointments) {
             if(appointment.status().equals(REJECTED)){
