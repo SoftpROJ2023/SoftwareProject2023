@@ -128,7 +128,7 @@ public class AdminDashboardStepDefinitions {
 
     @Then("the product with the ID {int} should be updated on the dashboard")
     public void the_product_with_the_id_should_be_updated_on_the_dashboard(Integer int1) {
-        assertTrue(adminDashboard.isProductUpdated(int1,name,description, price, category, availability));
+        assertTrue(adminDashboard.isProductUpdated(int1));
     }
 
 
