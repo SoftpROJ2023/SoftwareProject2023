@@ -509,8 +509,12 @@ public class FrontendComponents {
     }
 
     private void scheduleNewInstallationAppointment( ) {
-        appointment = readInputForAppointment();
-        logger.info(admin.addAppointment(appointment));
+       if (adminFlag || installerFlag) {
+            appointment = readInputForAppointment();
+            logger.info(admin.addAppointment(appointment));
+        } else {
+            logger.info("You do not have permission to schedule appointments.");
+        }
     }
 
     private void viewAllInstallationAppointments() {
