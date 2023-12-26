@@ -470,11 +470,12 @@ public class FrontendComponents {
         String productNameForEdit = scanner.nextLine();
         int returnProduct = admin.getProductByName(productNameForEdit);
         if (returnProduct == 0) {
-            logger.info("Product not found: " + productNameForEdit);
+            String productNotFound="Product not found: " + productNameForEdit;
+            logger.info(productNotFound);
             return;
         }
-            logger.info("The product whose information you want to modify already exists, and This is the ID of the product should be entered in Id " + returnProduct);
-
+            String productModify="The product whose information you want to modify already exists, and This is the ID of the product should be entered in Id " + returnProduct;
+            logger.info(productModify);
             readInputFromUser();
             String resultUpdated=admin.updateProduct(id, name, description, price, category, availability);
             logger.info(resultUpdated);
