@@ -121,10 +121,7 @@ public class AdminDashboard {
     }
 
     public boolean isProductUpdated(int productId) {
-        if (productMap.containsKey(productId)) {
-            return true;
-        }
-        return false;
+        return productMap.containsKey(productId);
     }
 
 
