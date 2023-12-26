@@ -509,12 +509,12 @@ public class FrontendComponents {
     }
 
     private void scheduleNewInstallationAppointment( ) {
-       if (adminFlag || installerFlag) {
+       String Appointment="You do not have permission to schedule appointments.";
+        if (adminFlag || installerFlag) {
             appointment = readInputForAppointment();
-            logger.info(admin.addAppointment(appointment));
-        } else {
-            logger.info("You do not have permission to schedule appointments.");
+            Appointment=admin.addAppointment(appointment);
         }
+        logger.info(Appointment);
     }
 
     private void viewAllInstallationAppointments() {
